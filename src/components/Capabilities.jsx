@@ -32,7 +32,6 @@ const capabilityDetails = {
 
 export default function Capabilities({ isActive }) {
   const [mounted, setMounted] = useState(false)
-  const [hovered, setHovered] = useState(null)
   const [selected, setSelected] = useState(null)
 
   useEffect(() => {
@@ -41,7 +40,6 @@ export default function Capabilities({ isActive }) {
       return () => clearTimeout(t)
     } else {
       setMounted(false)
-      setHovered(null)
       setSelected(null)
     }
   }, [isActive])
@@ -59,7 +57,6 @@ export default function Capabilities({ isActive }) {
 
   return (
     <section className={`capabilities ${mounted ? 'capabilities--in' : ''}`}>
-
       <div className="capabilities__header">
         <span className="scene-label">Systems</span>
         <h2 className="capabilities__title">What we build</h2>
@@ -74,8 +71,6 @@ export default function Capabilities({ isActive }) {
               key={index}
               className="capability"
               style={{ '--idx': idx }}
-              onMouseEnter={() => setHovered(index)}
-              onMouseLeave={() => setHovered(null)}
               onClick={() => setSelected({ index, discipline, description })}
               data-cursor="expand"
               role="button"
@@ -130,6 +125,146 @@ export default function Capabilities({ isActive }) {
         </div>
       )}
 
+      <style>{`
+        .capability-modal {
+          position: fixed;
+          inset: 0;
+          z-index: 95;
+          display: grid;
+          place-items: center;
+          padding: 24px;
+          background:
+            radial-gradient(circle at center, rgba(90, 140, 190, 0.10), transparent 42%),
+            rgba(2, 5, 12, 0.78);
+          backdrop-filter: blur(18px);
+        }
+
+        .capability-modal__window {
+          position: relative;
+          width: min(560px, 92vw);
+          border: 1px solid rgba(170, 210, 255, 0.18);
+          background: linear-gradient(145deg, rgba(4, 8, 18, 0.98), rgba(8, 15, 28, 0.94));
+          box-shadow: 0 30px 120px rgba(0, 0, 0, 0.65);
+          padding: 26px 24px 24px;
+          color: rgba(235, 244, 255, 0.94);
+        }
+
+        .capability-modal__close {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          width: 42px;
+          height: 42px;
+          border: 1px solid rgba(190, 220, 255, 0.18);
+          background: rgba(255, 255, 255, 0.04);
+          color: rgba(235, 244, 255, 0.92);
+          font-size: 28px;
+          line-height: 1;
+          cursor: pointer;
+        }
+
+        .capability-modal__eyebrow {
+          display: block;
+          margin-bottom: 16px;
+          font-size: 10px;
+          letter-spacing: 0.28em;
+          text-transform: uppercase;
+          color: rgba(155, 190, 225, 0.72);
+        }
+
+        .capability-modal__title {
+          margin: 0 48px 16px 0;
+          font-size: clamp(34px, 6vw, 64px);
+          font-weight: 400;
+          line-height: 0.95;
+          color: rgba(245, 248, 255, 0.96);
+        }
+
+        .capability-modal__text {
+          margin: 0;
+          max-width: 520px;
+          font-size: 15px;
+          line-height: 1.7;
+          color: rgba(215, 230, 250, 0.72);
+        }
+
+        @media (max-width: 760px) {
+          .capabilities__header {
+            margin-bottom: 18px;
+          }
+
+          .capabilities__title {
+            font-size: clamp(42px, 12vw, 62px);
+            line-height: 0.95;
+          }
+
+          .capabilities__list {
+            max-height: calc(100vh - 240px);
+            overflow-y: auto;
+            padding-right: 6px;
+            padding-bottom: 28px;
+          }
+
+          .capability {
+            min-height: 86px;
+            padding: 14px 0;
+          }
+
+          .capability__index {
+            font-size: 11px;
+          }
+
+          .capability__name {
+            font-size: clamp(18px, 7vw, 30px);
+            line-height: 1.02;
+          }
+
+          .capability__desc {
+            display: none;
+          }
+
+          .capability__trail {
+            display: none;
+          }
+
+          .capability-modal {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 90px 14px 18px;
+            overflow-y: auto;
+          }
+
+          .capability-modal__window {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px 18px 18px;
+          }
+
+          .capability-modal__close {
+            top: 14px;
+            right: 14px;
+            width: 38px;
+            height: 38px;
+            font-size: 24px;
+          }
+
+          .capability-modal__eyebrow {
+            margin-bottom: 12px;
+            font-size: 9px;
+          }
+
+          .capability-modal__title {
+            margin-right: 42px;
+            font-size: clamp(28px, 11vw, 50px);
+          }
+
+          .capability-modal__text {
+            font-size: 14px;
+            line-height: 1.65;
+          }
+        }
+      `}</style>
     </section>
   )
 }

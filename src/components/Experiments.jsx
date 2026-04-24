@@ -142,10 +142,11 @@ export default function Experiments({ isActive }) {
 
         .creature-grid {
           width: min(1180px, calc(100vw - 110px));
-          margin-top: clamp(34px, 6vh, 62px);
+          margin-top: clamp(30px, 5vh, 56px);
           display: grid;
           grid-template-columns: repeat(5, minmax(0, 1fr));
           gap: 12px;
+          padding-bottom: 18px;
         }
 
         .creature-card {
@@ -351,13 +352,14 @@ export default function Experiments({ isActive }) {
 
           .creature-grid {
             width: calc(100vw - 84px);
-            margin-top: 30px;
+            margin-top: 24px;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 10px;
+            padding-bottom: 26px;
           }
 
           .creature-card__media {
-            aspect-ratio: 9 / 10.5;
+            aspect-ratio: 9 / 10.2;
           }
 
           .creature-card__text {
@@ -374,12 +376,17 @@ export default function Experiments({ isActive }) {
           }
 
           .creature-modal {
-            padding: 14px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 90px 14px 18px;
+            overflow-y: auto;
           }
 
           .creature-modal__window {
             width: 100%;
-            max-height: 86vh;
+            max-width: 420px;
+            max-height: none;
           }
 
           .creature-modal__top h3 {
