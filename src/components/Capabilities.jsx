@@ -5,33 +5,28 @@ import '../styles/capabilities.css'
 const capabilityDetails = {
   'AI Direction': {
     title: 'AI Direction',
-    offer:
-      'I guide AI outputs into a clear cinematic direction — mood, references, composition, visual consistency, and taste.',
-    points: ['Creative direction', 'Prompt systems', 'Mood + reference control'],
+    text:
+      'Creative direction for AI visuals: mood, references, composition, consistency, and cinematic taste.',
   },
   'World Building': {
     title: 'World Building',
-    offer:
-      'I build the feeling and logic of a world — characters, locations, symbols, atmosphere, and story language.',
-    points: ['World logic', 'Characters + environments', 'Cinematic atmosphere'],
+    text:
+      'Building the logic of a world: atmosphere, characters, locations, symbols, and story language.',
   },
   'Visual Systems': {
     title: 'Visual Systems',
-    offer:
-      'I create repeatable visual rules so a project feels intentional, not random — colors, textures, typography, and image language.',
-    points: ['Brand feeling', 'Consistent visuals', 'Scene identity'],
+    text:
+      'A clear visual language for a project: color, texture, typography, image style, and repeatable rules.',
   },
   'Experimental Film': {
     title: 'Experimental Film',
-    offer:
-      'I shape short cinematic sequences using AI visuals, editing rhythm, image-to-video, sound, and emotional pacing.',
-    points: ['Short films', 'AI video direction', 'Mood-driven edits'],
+    text:
+      'Short cinematic sequences shaped with AI visuals, editing rhythm, sound, and emotional pacing.',
   },
   'Generative Design': {
     title: 'Generative Design',
-    offer:
-      'I create AI-assisted visual experiments, posters, interfaces, concepts, and evolving design systems.',
-    points: ['Posters + concepts', 'Creative tools', 'Generative visuals'],
+    text:
+      'AI-assisted posters, concepts, interfaces, creative experiments, and evolving design systems.',
   },
 }
 
@@ -52,12 +47,12 @@ export default function Capabilities({ isActive }) {
   }, [isActive])
 
   useEffect(() => {
-    const onKeyDown = (event) => {
+    const closeOnEscape = (event) => {
       if (event.key === 'Escape') setSelected(null)
     }
 
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
+    window.addEventListener('keydown', closeOnEscape)
+    return () => window.removeEventListener('keydown', closeOnEscape)
   }, [])
 
   const activeDetail = selected ? capabilityDetails[selected.discipline] : null
@@ -77,29 +72,31 @@ export default function Capabilities({ isActive }) {
           return (
             <li
               key={index}
-              className={`capability ${hovered === index ? 'capability--hovered' : ''}`}
+              className="capability"
               style={{ '--idx': idx }}
               onMouseEnter={() => setHovered(index)}
               onMouseLeave={() => setHovered(null)}
               onClick={() => setSelected({ index, discipline, description })}
               data-cursor="expand"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault()
+                  setSelected({ index, discipline, description })
+                }
+              }}
             >
-              <button
-                className="capability__button"
-                type="button"
-                aria-label={`Open ${discipline}`}
-              >
-                <span className="capability__index">{index}</span>
+              <span className="capability__index">{index}</span>
 
-                <span className="capability__body">
-                  <h3 className="capability__name">{discipline}</h3>
-                  <p className="capability__desc">{description}</p>
-                </span>
+              <div className="capability__body">
+                <h3 className="capability__name">{discipline}</h3>
+                <p className="capability__desc">{description}</p>
+              </div>
 
-                <span className="capability__trail" aria-hidden="true">
-                  OPEN
-                </span>
-              </button>
+              <span className="capability__trail" aria-hidden="true">
+                {discipline.toUpperCase()}
+              </span>
             </li>
           )
         })}
@@ -128,13 +125,7 @@ export default function Capabilities({ isActive }) {
 
             <span className="capability-modal__eyebrow">Service window</span>
             <h3 className="capability-modal__title">{activeDetail.title}</h3>
-            <p className="capability-modal__text">{activeDetail.offer}</p>
-
-            <ul className="capability-modal__points">
-              {activeDetail.points.map((point) => (
-                <li key={point}>{point}</li>
-              ))}
-            </ul>
+            <p className="capability-modal__text">{activeDetail.text}</p>
           </div>
         </div>
       )}
