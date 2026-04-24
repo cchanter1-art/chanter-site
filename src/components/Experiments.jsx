@@ -4,7 +4,9 @@ import '../styles/experiments.css'
 
 export default function Experiments({ isActive }) {
   const [mounted, setMounted] = useState(false)
-  const [openWork, setOpenWork] = useState(null)
+  const [openIndex, setOpenIndex] = useState(null)
+
+  const openWork = openIndex !== null ? works[openIndex] : null
 
   useEffect(() => {
     if (isActive) {
@@ -13,17 +15,33 @@ export default function Experiments({ isActive }) {
     }
 
     setMounted(false)
-    setOpenWork(null)
+    setOpenIndex(null)
   }, [isActive])
+
+  const goPrev = () => {
+    setOpenIndex((current) => {
+      if (current === null) return 0
+      return current === 0 ? works.length - 1 : current - 1
+    })
+  }
+
+  const goNext = () => {
+    setOpenIndex((current) => {
+      if (current === null) return 0
+      return current === works.length - 1 ? 0 : current + 1
+    })
+  }
 
   useEffect(() => {
     const onKeyDown = (event) => {
-      if (event.key === 'Escape') setOpenWork(null)
+      if (event.key === 'Escape') setOpenIndex(null)
+      if (event.key === 'ArrowLeft' && openIndex !== null) goPrev()
+      if (event.key === 'ArrowRight' && openIndex !== null) goNext()
     }
 
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [])
+  }, [openIndex])
 
   return (
     <section className={`experiments experiments--archive ${mounted ? 'experiments--in' : ''}`}>
@@ -35,41 +53,43 @@ export default function Experiments({ isActive }) {
         </p>
       </div>
 
-      <div className="creature-grid">
-        {works.map((work) => (
-          <button
-            key={work.id}
-            className="creature-card"
-            type="button"
-            onClick={() => setOpenWork(work)}
-          >
-            <span className="creature-card__id">{work.id}</span>
+      <div className="creature-scroll">
+        <div className="creature-grid">
+          {works.map((work, index) => (
+            <button
+              key={work.id}
+              className="creature-card"
+              type="button"
+              onClick={() => setOpenIndex(index)}
+            >
+              <span className="creature-card__id">{work.id}</span>
 
-            <div className="creature-card__media">
-              {work.videoSrc ? (
-                <video
-                  src={work.videoSrc}
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  onMouseEnter={(event) => event.currentTarget.play()}
-                  onMouseLeave={(event) => {
-                    event.currentTarget.pause()
-                    event.currentTarget.currentTime = 0
-                  }}
-                />
-              ) : (
-                <div className="creature-card__empty" />
-              )}
-            </div>
+              <div className="creature-card__media">
+                {work.videoSrc ? (
+                  <video
+                    src={work.videoSrc}
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    onMouseEnter={(event) => event.currentTarget.play()}
+                    onMouseLeave={(event) => {
+                      event.currentTarget.pause()
+                      event.currentTarget.currentTime = 0
+                    }}
+                  />
+                ) : (
+                  <div className="creature-card__empty" />
+                )}
+              </div>
 
-            <div className="creature-card__text">
-              <strong>{work.title}</strong>
-              <span>{work.category}</span>
-            </div>
-          </button>
-        ))}
+              <div className="creature-card__text">
+                <strong>{work.title}</strong>
+                <span>{work.category}</span>
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
 
       {openWork && (
@@ -78,7 +98,7 @@ export default function Experiments({ isActive }) {
             className="creature-modal__backdrop"
             type="button"
             aria-label="Close"
-            onClick={() => setOpenWork(null)}
+            onClick={() => setOpenIndex(null)}
           />
 
           <div className="creature-modal__window">
@@ -91,7 +111,7 @@ export default function Experiments({ isActive }) {
               <button
                 className="creature-modal__close"
                 type="button"
-                onClick={() => setOpenWork(null)}
+                onClick={() => setOpenIndex(null)}
                 aria-label="Close"
               >
                 ×
@@ -99,8 +119,18 @@ export default function Experiments({ isActive }) {
             </div>
 
             <div className="creature-modal__video">
+              <button
+                className="creature-modal__arrow creature-modal__arrow--left"
+                type="button"
+                onClick={goPrev}
+                aria-label="Previous creature"
+              >
+                ‹
+              </button>
+
               {openWork.videoSrc ? (
                 <video
+                  key={openWork.videoSrc}
                   src={openWork.videoSrc}
                   controls
                   autoPlay
@@ -120,9 +150,28 @@ export default function Experiments({ isActive }) {
               ) : (
                 <div className="creature-modal__empty" />
               )}
+
+              <button
+                className="creature-modal__arrow creature-modal__arrow--right"
+                type="button"
+                onClick={goNext}
+                aria-label="Next creature"
+              >
+                ›
+              </button>
             </div>
 
-            <p>{openWork.description}</p>
+            <div className="creature-modal__bottom">
+              <p>{openWork.description}</p>
+
+              <div className="creature-modal__nav">
+                <button type="button" onClick={goPrev}>Prev</button>
+                <span>
+                  {String(openIndex + 1).padStart(2, '0')} / {String(works.length).padStart(2, '0')}
+                </span>
+                <button type="button" onClick={goNext}>Next</button>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -140,13 +189,20 @@ export default function Experiments({ isActive }) {
           line-height: 1.6;
         }
 
-        .creature-grid {
+        .creature-scroll {
           width: min(1180px, calc(100vw - 110px));
           margin-top: clamp(30px, 5vh, 56px);
+          max-height: calc(100vh - 330px);
+          overflow-y: auto;
+          padding-right: 8px;
+          padding-bottom: 20px;
+          scrollbar-width: thin;
+        }
+
+        .creature-grid {
           display: grid;
           grid-template-columns: repeat(5, minmax(0, 1fr));
           gap: 12px;
-          padding-bottom: 18px;
         }
 
         .creature-card {
@@ -259,7 +315,7 @@ export default function Experiments({ isActive }) {
 
         .creature-modal__window {
           position: relative;
-          width: min(420px, 92vw);
+          width: min(430px, 92vw);
           max-height: 88vh;
           overflow: hidden;
           border: 1px solid rgba(170, 210, 255, 0.2);
@@ -306,6 +362,7 @@ export default function Experiments({ isActive }) {
         }
 
         .creature-modal__video {
+          position: relative;
           background: rgba(0, 0, 0, 0.46);
           display: grid;
           place-items: center;
@@ -318,18 +375,72 @@ export default function Experiments({ isActive }) {
           display: block;
         }
 
+        .creature-modal__arrow {
+          position: absolute;
+          top: 50%;
+          z-index: 4;
+          width: 42px;
+          height: 56px;
+          transform: translateY(-50%);
+          border: 1px solid rgba(190, 220, 255, 0.2);
+          background: rgba(3, 7, 15, 0.46);
+          color: rgba(245, 248, 255, 0.92);
+          font-size: 40px;
+          line-height: 1;
+          cursor: pointer;
+          backdrop-filter: blur(8px);
+        }
+
+        .creature-modal__arrow--left {
+          left: 10px;
+        }
+
+        .creature-modal__arrow--right {
+          right: 10px;
+        }
+
         .creature-modal__empty {
           width: 100%;
           height: 420px;
           background: linear-gradient(145deg, #050814, #10182a);
         }
 
-        .creature-modal__window p {
-          margin: 0;
+        .creature-modal__bottom {
           padding: 15px 18px 18px;
+        }
+
+        .creature-modal__bottom p {
+          margin: 0;
           color: rgba(215, 230, 250, 0.66);
           font-size: 12px;
           line-height: 1.65;
+        }
+
+        .creature-modal__nav {
+          margin-top: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          border-top: 1px solid rgba(170, 210, 255, 0.12);
+          padding-top: 14px;
+        }
+
+        .creature-modal__nav button {
+          border: 1px solid rgba(170, 210, 255, 0.16);
+          background: rgba(255, 255, 255, 0.04);
+          color: rgba(235, 244, 255, 0.86);
+          padding: 8px 12px;
+          font-size: 10px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          cursor: pointer;
+        }
+
+        .creature-modal__nav span {
+          font-size: 10px;
+          letter-spacing: 0.22em;
+          color: rgba(180, 210, 240, 0.54);
         }
 
         @media (min-width: 1400px) {
@@ -350,12 +461,18 @@ export default function Experiments({ isActive }) {
             max-width: 280px;
           }
 
-          .creature-grid {
+          .creature-scroll {
             width: calc(100vw - 84px);
             margin-top: 24px;
+            max-height: calc(100vh - 430px);
+            overflow-y: auto;
+            padding-right: 4px;
+            padding-bottom: 80px;
+          }
+
+          .creature-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 10px;
-            padding-bottom: 26px;
           }
 
           .creature-card__media {
@@ -379,7 +496,7 @@ export default function Experiments({ isActive }) {
             display: flex;
             align-items: flex-start;
             justify-content: center;
-            padding: 90px 14px 18px;
+            padding: 78px 14px 18px;
             overflow-y: auto;
           }
 
@@ -395,6 +512,20 @@ export default function Experiments({ isActive }) {
 
           .creature-modal__video video {
             max-height: 58vh;
+          }
+
+          .creature-modal__arrow {
+            width: 38px;
+            height: 50px;
+            font-size: 34px;
+          }
+
+          .creature-modal__arrow--left {
+            left: 6px;
+          }
+
+          .creature-modal__arrow--right {
+            right: 6px;
           }
         }
       `}</style>
