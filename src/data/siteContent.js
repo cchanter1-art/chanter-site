@@ -57,7 +57,6 @@ export const works = [
     year:        '2026',
     description: 'A planetary atlas built entirely through directed diffusion.',
     imageSrc:    null,
-    // Cold: deep blue-steel, night geography
     gradient: 'linear-gradient(148deg, #06090f 0%, #0d1829 40%, #0a1520 70%, #040811 100%)',
   },
   {
@@ -67,7 +66,6 @@ export const works = [
     year:        '2026',
     description: 'A 12-minute sequence depicting the archaeology of a forgetting.',
     imageSrc:    null,
-    // Fog: pale mist over void
     gradient: 'linear-gradient(148deg, #08090e 0%, #141b2a 45%, #0c1320 75%, #05060c 100%)',
   },
   {
@@ -77,7 +75,6 @@ export const works = [
     year:        '2025',
     description: 'Geological time rendered as modular design infrastructure.',
     imageSrc:    null,
-    // Stone: cold charcoal with blue undertone
     gradient: 'linear-gradient(148deg, #0a0c0f 0%, #161c26 45%, #0d1018 75%, #060709 100%)',
   },
   {
@@ -87,7 +84,6 @@ export const works = [
     year:        '2025',
     description: 'A collaborative system for high-volume cinematic world generation.',
     imageSrc:    null,
-    // Iris: deep violet-indigo night
     gradient: 'linear-gradient(148deg, #08080f 0%, #12112a 45%, #0d0c20 75%, #050508 100%)',
   },
 ]
@@ -96,12 +92,10 @@ export const contact = {
   headline: 'Begin a world.',
   subtext:
     'Available for select commissions, collaborations, and long-form projects.',
-  email:   'hello@chanter.world',
+  email: 'cchanter1@gmail.com',
   socials: [
-    { label: 'Instagram', href: 'https://instagram.com' },
-    { label: 'X / Twitter', href: 'https://x.com' },
-    { label: 'Vimeo',     href: 'https://vimeo.com' },
-    { label: 'Are.na',    href: 'https://are.na' },
+    { label: 'Instagram', href: 'https://www.instagram.com/davidchristos_/' },
+    { label: 'TikTok', href: 'https://www.tiktok.com/@__chanter' },
   ],
   footnote: `© ${new Date().getFullYear()} CHANTER. All rights reserved.`,
 }
