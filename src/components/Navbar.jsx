@@ -1,43 +1,36 @@
 import React from 'react'
-import { brand, nav } from '../data/siteContent.js'
+import { nav } from '../data/siteContent.js'
 import '../styles/navbar.css'
 
 export default function Navbar({ currentScene, goToScene }) {
   return (
-    <header className="navbar">
-
+    <header className="navbar" aria-label="Primary navigation">
       <button
-        className="navbar__logo"
+        className="navbar__brand"
+        type="button"
         onClick={() => goToScene(0)}
-        aria-label="Return to beginning"
-        data-cursor="text"
+        data-cursor="invert"
       >
-        {brand.name}
+        WELCOME WORLD
       </button>
 
-      <nav className="navbar__links" aria-label="Scene navigation">
+      <nav className="navbar__links" aria-label="Site sections">
         {nav.map(({ label, scene }) => (
           <button
             key={label}
             className={`navbar__link ${currentScene === scene ? 'navbar__link--active' : ''}`}
+            type="button"
             onClick={() => goToScene(scene)}
-            data-cursor="text"
+            data-cursor="invert"
           >
             {label}
           </button>
         ))}
       </nav>
 
-      <div className="navbar__counter" aria-hidden="true">
-        <span className="navbar__counter-current">
-          {String(currentScene + 1).padStart(2, '0')}
-        </span>
-        <span className="navbar__counter-sep">/</span>
-        <span className="navbar__counter-total">
-          {String(nav.length + 1).padStart(2, '0')}
-        </span>
-      </div>
-
+      <span className="navbar__counter" aria-hidden="true">
+        {String(currentScene + 1).padStart(2, '0')} / 04
+      </span>
     </header>
   )
 }
