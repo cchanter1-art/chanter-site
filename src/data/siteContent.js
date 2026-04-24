@@ -5,8 +5,8 @@
 
 export const brand = {
   name:       'CHANTER',
-  tagline:    'AI direction / worldbuilding / visual systems',
-  supporting: 'Cinematic AI-driven visuals, systems, and experimental worlds.',
+  tagline:    'AI direction / creature design / visual systems',
+  supporting: 'Cinematic AI-driven visuals, creature prototypes, and experimental worlds.',
   year:       '2026',
 }
 
@@ -21,31 +21,31 @@ export const capabilities = [
     index: '01',
     discipline: 'AI Direction',
     description:
-      'Shaping AI systems into instruments of intention — directing outputs toward coherent visual worlds.',
+      'Creative direction for AI visuals: mood, references, composition, consistency, and cinematic taste.',
   },
   {
     index: '02',
-    discipline: 'World Building',
+    discipline: 'Creature Design',
     description:
-      'Constructing imagined realities with internal logic. Mythology, atmosphere, geography, time.',
+      'Designing original creatures with clear silhouette, mood, personality, and cinematic presence.',
   },
   {
     index: '03',
     discipline: 'Visual Systems',
     description:
-      'Designing the rules that govern how a world looks — not one image, but a living language.',
+      'Creating repeatable visual rules for color, texture, typography, scene language, and identity.',
   },
   {
     index: '04',
     discipline: 'Experimental Film',
     description:
-      'Sequences that exist between cinema and computation. Time-based works that resist genre.',
+      'Short cinematic sequences shaped with AI visuals, editing rhythm, sound, and emotional pacing.',
   },
   {
     index: '05',
     discipline: 'Generative Design',
     description:
-      'Systematic aesthetics driven by logic, randomness, and controlled entropy.',
+      'AI-assisted posters, concepts, interfaces, creative experiments, and evolving design systems.',
   },
 ]
 
