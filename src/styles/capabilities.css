@@ -1,0 +1,169 @@
+/* ─────────────────────────────────────────────────────────────
+   Capabilities — 2026: Architectural index
+   ─────────────────────────────────────────────────────────────*/
+
+.capabilities {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: var(--nav-h) var(--safe-x) var(--safe-y);
+  padding-top: calc(var(--nav-h) + var(--space-8));
+  gap: var(--space-8);
+  overflow: hidden;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.capabilities__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity   0.8s var(--ease-cinematic) 0.1s,
+    transform 0.8s var(--ease-cinematic) 0.1s;
+}
+.capabilities--in .capabilities__header {
+  opacity: 1;
+  transform: none;
+}
+
+.capabilities__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  color: var(--color-parchment);
+  line-height: 1;
+}
+
+/* ── List ─────────────────────────────────────────────────── */
+.capabilities__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 860px;
+  width: 100%;
+}
+
+/* ── Capability row ───────────────────────────────────────── */
+.capability {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4rem 1fr auto;
+  gap: 0 var(--space-6);
+  align-items: baseline;
+  padding: var(--space-4) 0 var(--space-5);
+  cursor: default;
+
+  opacity: 0;
+  transform: translateX(-18px);
+  transition:
+    opacity   0.65s var(--ease-reveal)  calc(0.2s + var(--idx) * 0.08s),
+    transform 0.65s var(--ease-reveal)  calc(0.2s + var(--idx) * 0.08s);
+}
+.capabilities--in .capability {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Top rule — draws in on mount ────────────────────────── */
+.capability::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: var(--color-edge);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease-cinematic) calc(0.28s + var(--idx) * 0.08s);
+}
+.capabilities--in .capability::before { transform: scaleX(1); }
+
+/* Hover: line shifts to arc */
+.capability:hover::before {
+  background: var(--color-arc);
+  opacity: 0.3;
+  transition: background var(--dur-mid) ease, opacity var(--dur-mid) ease;
+}
+
+/* ── Index ────────────────────────────────────────────────── */
+.capability__index {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--color-arc);
+  opacity: 0.65;
+  padding-top: 4px;
+  align-self: start;
+}
+
+/* ── Body ─────────────────────────────────────────────────── */
+.capability__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.capability__name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--color-bone);
+  line-height: 1.15;
+  transition: color var(--dur-fast) ease;
+}
+.capability:hover .capability__name { color: var(--color-light); }
+
+.capability__desc {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 300;
+  color: var(--color-ash);
+  line-height: 1.7;
+  max-width: 52ch;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity   var(--dur-mid) ease,
+    transform var(--dur-mid) ease;
+}
+.capability:hover .capability__desc {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Trailing index marker (right) ───────────────────────── */
+.capability__trail {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.1em;
+  color: var(--color-mist);
+  opacity: 0;
+  align-self: center;
+  transition: opacity var(--dur-mid) ease;
+}
+.capability:hover .capability__trail { opacity: 1; }
+
+/* ── Mobile ───────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .capabilities {
+    padding: calc(var(--nav-h) + var(--space-6)) var(--space-5) var(--space-5);
+    gap: var(--space-6);
+  }
+
+  .capability {
+    grid-template-columns: 2.5rem 1fr;
+  }
+  .capability__trail { display: none; }
+  .capability__desc  { display: none; }
+
+  .capability__name {
+    font-size: var(--text-md);
+  }
+}

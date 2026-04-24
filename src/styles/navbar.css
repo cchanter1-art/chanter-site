@@ -1,0 +1,127 @@
+/* ─────────────────────────────────────────────────────────────
+   Navbar — 2026 edition
+   ─────────────────────────────────────────────────────────────*/
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  height: var(--nav-h);
+  padding: 0 var(--safe-x);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+
+  /* Frosted glass top bar */
+  background: linear-gradient(
+    to bottom,
+    rgba(4, 5, 10, 0.72) 0%,
+    rgba(4, 5, 10, 0.18) 70%,
+    transparent 100%
+  );
+  -webkit-backdrop-filter: blur(0px);
+  backdrop-filter: blur(0px);
+}
+
+/* ── Logo wordmark ────────────────────────────────────────── */
+.navbar__logo {
+  font-family: var(--font-display);
+  font-size: clamp(0.8rem, 0.75rem + 0.25vw, 1rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.38em;
+  color: var(--color-light);
+  text-transform: uppercase;
+  transition: color var(--dur-fast) ease;
+  position: relative;
+}
+
+.navbar__logo:hover {
+  color: var(--color-white);
+}
+
+/* Subtle arc glow on hover */
+.navbar__logo::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-arc);
+  transition: width var(--dur-mid) var(--ease-cinematic);
+  opacity: 0.5;
+}
+.navbar__logo:hover::after {
+  width: 100%;
+}
+
+/* ── Nav links ────────────────────────────────────────────── */
+.navbar__links {
+  display: flex;
+  gap: var(--space-8);
+}
+
+.navbar__link {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-ash);
+  transition: color var(--dur-fast) ease;
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-arc);
+  opacity: 0.6;
+  transition: width var(--dur-mid) var(--ease-cinematic);
+}
+
+.navbar__link:hover { color: var(--color-bone); }
+.navbar__link--active { color: var(--color-parchment); }
+.navbar__link--active::after,
+.navbar__link:hover::after { width: 100%; }
+
+/* ── Scene counter ────────────────────────────────────────── */
+.navbar__counter {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: var(--color-smoke);
+  display: flex;
+  gap: 2px;
+  align-items: baseline;
+  user-select: none;
+}
+
+.navbar__counter-current {
+  color: var(--color-ash);
+  transition: color var(--dur-fast) ease;
+}
+
+.navbar__counter-sep { opacity: 0.35; margin: 0 1px; }
+
+/* ── Mobile ───────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .navbar { padding: 0 var(--space-5); }
+  .navbar__links { gap: var(--space-6); }
+  .navbar__counter { display: none; }
+}
+
+@media (max-width: 380px) {
+  .navbar__links { gap: var(--space-4); }
+}

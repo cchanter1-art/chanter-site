@@ -1,0 +1,97 @@
+/* ─────────────────────────────────────────────────────────────
+   App root + scene dots + scroll hint
+   ─────────────────────────────────────────────────────────────*/
+
+.app-root {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* ── Scene dots ───────────────────────────────────────────── */
+.scene-dots {
+  position: fixed;
+  right: var(--safe-x);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  z-index: 100;
+}
+
+.dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--color-smoke);
+  transition:
+    background var(--dur-mid) var(--ease-cinematic),
+    height     var(--dur-mid) var(--ease-settle),
+    border-radius var(--dur-mid) ease;
+}
+
+.dot--active {
+  background: var(--color-arc);
+  height: 18px;
+  border-radius: 2px;
+  opacity: 0.8;
+}
+
+/* ── Scroll hint ──────────────────────────────────────────── */
+.scroll-hint {
+  position: fixed;
+  bottom: var(--safe-y);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  z-index: 100;
+  opacity: 0;
+  transition: opacity var(--dur-slow) ease;
+  pointer-events: none;
+}
+.scroll-hint--visible {
+  opacity: 1;
+  animation: hint-breathe 3.5s ease-in-out 2s infinite;
+}
+
+.scroll-hint__line {
+  display: block;
+  width: 1px;
+  height: 28px;
+  background: linear-gradient(to bottom, transparent, var(--color-ash));
+  animation: hint-line 3.5s ease-in-out 2s infinite;
+}
+
+.scroll-hint__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-smoke);
+}
+
+@keyframes hint-breathe {
+  0%, 100% { opacity: 0.35; }
+  50%       { opacity: 0.9; }
+}
+@keyframes hint-line {
+  0%   { transform: scaleY(0); transform-origin: top; }
+  50%  { transform: scaleY(1); transform-origin: top; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ── Mobile ───────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .scene-dots { right: var(--space-4); }
+  .dot { width: 2px; height: 2px; }
+  .dot--active { height: 14px; }
+}

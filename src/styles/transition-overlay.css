@@ -1,0 +1,39 @@
+/* ─────────────────────────────────────────────────────────────
+   Transition Overlay — cold shutter flash
+   ─────────────────────────────────────────────────────────────*/
+
+.transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.transition-overlay__bar {
+  position: absolute;
+  left: 0; right: 0;
+  height: 110vh;
+  background: linear-gradient(
+    180deg,
+    transparent  0%,
+    rgba(138, 180, 204, 0.03) 46%,
+    rgba(138, 180, 204, 0.06) 50%,
+    rgba(138, 180, 204, 0.03) 54%,
+    transparent 100%
+  );
+  transform: translateX(-101%);
+  transition: transform 160ms var(--ease-cinematic);
+}
+
+.transition-overlay--sweep .transition-overlay__bar {
+  transform: translateX(0%);
+  transition: transform 150ms var(--ease-cinematic);
+}
+.transition-overlay--retreat .transition-overlay__bar {
+  transform: translateX(101%);
+  transition: transform 260ms var(--ease-cinematic);
+}
+.transition-overlay--idle .transition-overlay__bar {
+  transform: translateX(-101%);
+}
