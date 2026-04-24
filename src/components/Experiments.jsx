@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { works } from '../data/siteContent.js'
 import '../styles/experiments.css'
 
 export default function Experiments({ isActive }) {
   const [mounted, setMounted] = useState(false)
   const [openIndex, setOpenIndex] = useState(null)
+  const scrollRef = useRef(null)
+  const touchYRef = useRef(0)
 
   const openWork = openIndex !== null ? works[openIndex] : null
 
@@ -32,6 +34,35 @@ export default function Experiments({ isActive }) {
     })
   }
 
+  const lockArchiveWheel = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+
+    const el = scrollRef.current
+    if (!el) return
+
+    el.scrollTop += event.deltaY
+  }
+
+  const lockArchiveTouchStart = (event) => {
+    event.stopPropagation()
+    touchYRef.current = event.touches[0].clientY
+  }
+
+  const lockArchiveTouchMove = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+
+    const el = scrollRef.current
+    if (!el) return
+
+    const currentY = event.touches[0].clientY
+    const delta = touchYRef.current - currentY
+
+    el.scrollTop += delta
+    touchYRef.current = currentY
+  }
+
   useEffect(() => {
     const onKeyDown = (event) => {
       if (event.key === 'Escape') setOpenIndex(null)
@@ -53,7 +84,13 @@ export default function Experiments({ isActive }) {
         </p>
       </div>
 
-      <div className="creature-scroll">
+      <div
+        ref={scrollRef}
+        className="creature-scroll"
+        onWheel={lockArchiveWheel}
+        onTouchStart={lockArchiveTouchStart}
+        onTouchMove={lockArchiveTouchMove}
+      >
         <div className="creature-grid">
           {works.map((work, index) => (
             <button
@@ -197,6 +234,8 @@ export default function Experiments({ isActive }) {
           padding-right: 8px;
           padding-bottom: 20px;
           scrollbar-width: thin;
+          overscroll-behavior: contain;
+          touch-action: none;
         }
 
         .creature-grid {
@@ -468,6 +507,8 @@ export default function Experiments({ isActive }) {
             overflow-y: auto;
             padding-right: 4px;
             padding-bottom: 80px;
+            overscroll-behavior: contain;
+            touch-action: none;
           }
 
           .creature-grid {
