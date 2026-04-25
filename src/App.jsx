@@ -65,7 +65,7 @@ export default function App() {
     const playPromise = video.play();
     if (playPromise && typeof playPromise.catch === "function") {
       playPromise.catch(() => {
-        // Browser may block sound in rare cases; controls remain visible for manual play.
+        // leave controls visible if browser blocks autoplay with sound
       });
     }
   }, [activeVideo]);

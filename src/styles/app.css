@@ -1420,3 +1420,336 @@ h2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+/* ============================================================
+   iPhone / tighter mobile layout
+   reduce empty space, make texts visible sooner
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .c-site {
+    overflow-x: hidden;
+  }
+
+  .c-nav {
+    padding: calc(12px + env(safe-area-inset-top)) 14px 10px;
+    gap: 10px;
+  }
+
+  .c-brand {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    white-space: nowrap;
+  }
+
+  .c-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
+  }
+
+  .c-links button {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+  }
+
+  .c-section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .c-hero {
+    min-height: 76svh;
+    padding-top: calc(72px + env(safe-area-inset-top));
+    padding-bottom: 28px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .c-hero-inner {
+    position: relative;
+    z-index: 3;
+    max-width: 100%;
+    padding-top: 8px;
+  }
+
+  .c-kicker {
+    margin: 0 0 8px;
+    font-size: 8px;
+    line-height: 1.35;
+    letter-spacing: 0.16em;
+    max-width: 34ch;
+  }
+
+  .c-hero-inner h1 {
+    margin: 0 0 8px;
+    font-size: clamp(48px, 18vw, 84px);
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+  }
+
+  .c-hero-copy {
+    margin: 0;
+    max-width: 30ch;
+    font-size: 10px;
+    line-height: 1.45;
+    opacity: 0.88;
+  }
+
+  .c-hero-illusion {
+    transform: scale(0.76);
+    transform-origin: center;
+    opacity: 0.34;
+    right: -18vw;
+    bottom: -10vh;
+  }
+
+  .c-systems,
+  .c-work,
+  .c-contact {
+    padding-top: 42px;
+    padding-bottom: 54px;
+  }
+
+  .c-section-head {
+    margin-bottom: 18px;
+  }
+
+  .c-section-head h2,
+  .c-contact h2 {
+    margin: 0;
+    font-size: clamp(34px, 11vw, 56px);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+  }
+
+  .c-muted {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .c-service-list {
+    gap: 10px;
+  }
+
+  .c-service {
+    padding: 12px 0;
+    grid-template-columns: 42px 1fr 22px;
+    column-gap: 10px;
+  }
+
+  .c-service-num {
+    font-size: 10px;
+  }
+
+  .c-service-title {
+    font-size: 14px;
+  }
+
+  .c-service-icon {
+    font-size: 16px;
+  }
+
+  .c-panel {
+    margin-top: 16px;
+    padding: 16px;
+  }
+
+  .c-panel-label {
+    font-size: 8px;
+    letter-spacing: 0.18em;
+  }
+
+  .c-panel h3 {
+    margin: 8px 0 10px;
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .c-panel p {
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .c-mobile-folder {
+    min-height: 154px;
+    padding: 18px;
+  }
+
+  .c-mobile-folder-label,
+  .c-mobile-folder-count,
+  .c-mobile-folder-sub {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+  }
+
+  .c-mobile-folder-title {
+    margin-top: 30px;
+    font-size: clamp(34px, 11vw, 48px);
+    line-height: 0.94;
+  }
+
+  .c-mobile-archive-page {
+    padding: calc(70px + env(safe-area-inset-top)) 14px 24px;
+  }
+
+  .c-mobile-archive-top {
+    top: calc(-70px - env(safe-area-inset-top));
+    margin: calc(-70px - env(safe-area-inset-top)) -14px 16px;
+    padding: calc(12px + env(safe-area-inset-top)) 14px 12px;
+    gap: 10px;
+  }
+
+  .c-mobile-archive-top button,
+  .c-mobile-archive-top span,
+  .c-mobile-archive-top p {
+    font-size: 8px;
+    letter-spacing: 0.16em;
+  }
+
+  .c-mobile-archive-top h2 {
+    margin-top: 4px;
+    font-size: 28px;
+    line-height: 0.95;
+  }
+
+  .c-mobile-archive-grid {
+    gap: 14px 10px;
+  }
+
+  .c-mobile-archive-grid .c-card-info h3 {
+    margin: 10px 0 4px;
+    font-size: 13px;
+  }
+
+  .c-mobile-archive-grid .c-card-info p {
+    font-size: 8px;
+    letter-spacing: 0.18em;
+  }
+
+  .c-email {
+    font-size: 14px;
+    line-height: 1.35;
+    word-break: break-word;
+  }
+
+  .c-socials {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .c-socials a {
+    font-size: 11px;
+  }
+
+  .c-lightbox-window {
+    width: calc(100vw - 16px);
+    max-height: calc(100svh - 16px);
+  }
+
+  .c-lightbox-top {
+    padding: 12px 14px;
+  }
+
+  .c-lightbox-top p {
+    font-size: 8px;
+  }
+
+  .c-lightbox-top h3 {
+    font-size: 16px;
+  }
+
+  .c-lightbox-close {
+    font-size: 9px;
+  }
+
+  .c-lightbox-media {
+    padding: 0 10px 10px;
+  }
+
+  .c-lightbox-media video {
+    max-height: 52svh;
+  }
+
+  .c-lightbox-controls {
+    padding: 10px 14px 14px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 430px) {
+  .c-nav {
+    padding: calc(10px + env(safe-area-inset-top)) 12px 8px;
+  }
+
+  .c-brand {
+    font-size: 8px;
+    letter-spacing: 0.14em;
+  }
+
+  .c-links {
+    gap: 10px;
+  }
+
+  .c-links button {
+    font-size: 8px;
+    letter-spacing: 0.12em;
+  }
+
+  .c-hero {
+    min-height: 72svh;
+    padding-top: calc(66px + env(safe-area-inset-top));
+    padding-bottom: 22px;
+  }
+
+  .c-kicker {
+    font-size: 7px;
+    max-width: 32ch;
+  }
+
+  .c-hero-inner h1 {
+    font-size: clamp(44px, 17vw, 70px);
+  }
+
+  .c-hero-copy {
+    font-size: 9px;
+    max-width: 28ch;
+  }
+
+  .c-hero-illusion {
+    transform: scale(0.68);
+    right: -26vw;
+    bottom: -12vh;
+    opacity: 0.28;
+  }
+
+  .c-section-head h2,
+  .c-contact h2 {
+    font-size: clamp(30px, 10vw, 44px);
+  }
+
+  .c-mobile-folder {
+    min-height: 142px;
+    padding: 16px;
+  }
+
+  .c-mobile-folder-title {
+    margin-top: 24px;
+    font-size: clamp(30px, 10vw, 42px);
+  }
+
+  .c-mobile-archive-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 8px;
+  }
+
+  .c-mobile-archive-grid .c-card-info h3 {
+    font-size: 12px;
+  }
+
+  .c-mobile-archive-grid .c-card-info p {
+    font-size: 7px;
+  }
+}
