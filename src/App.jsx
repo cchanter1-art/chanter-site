@@ -1,45 +1,186 @@
-import React, { useEffect, useState } from 'react'
-import SceneShell from './components/SceneShell.jsx'
-import BackgroundVisual from './components/BackgroundVisual.jsx'
-import Navbar from './components/Navbar.jsx'
-import Hero from './components/Hero.jsx'
-import Capabilities from './components/Capabilities.jsx'
-import Experiments from './components/Experiments.jsx'
-import Footer from './components/Footer.jsx'
-import IntroScreen from './components/IntroScreen.jsx'
-import CustomCursor from './components/CustomCursor.jsx'
-import TransitionOverlay from './components/TransitionOverlay.jsx'
-import useSceneScroll from './hooks/useSceneScroll.js'
-import useMouseParallax from './hooks/useMouseParallax.js'
-import './styles/app.css'
+import React, { useEffect, useState } from "react";
 
-const SCENES = [Hero, Capabilities, Experiments, Footer]
+const services = [
+  {
+    title: "AI Direction",
+    text: "Cinematic direction for AI visuals, scenes, campaigns, and creative systems.",
+  },
+  {
+    title: "Creature Design",
+    text: "Original characters, alien creatures, dark fantasy forms, and visual identity tests.",
+  },
+  {
+    title: "Visual Systems",
+    text: "Worldbuilding, design language, UI mood, prompts, motion logic, and visual consistency.",
+  },
+  {
+    title: "Experimental Film",
+    text: "Short cinematic prototypes, image-to-video scenes, music-driven edits, and atmosphere tests.",
+  },
+  {
+    title: "Generative Design",
+    text: "AI-assisted creative workflows, brand visuals, web experiments, and creator tools.",
+  },
+];
 
-const MOBILE_FIX_CSS = `
-/* =========================================================
-   CHANTER MOBILE HARD FIX
-   Keeps the cinematic identity but prevents broken mobile UI.
-   ========================================================= */
+const workItems = [
+  {
+    title: "Creature 01",
+    tag: "Prototype",
+  },
+  {
+    title: "Creature 02",
+    tag: "Motion Test",
+  },
+  {
+    title: "World System",
+    tag: "Visual Study",
+  },
+  {
+    title: "Neon Archive",
+    tag: "Experiment",
+  },
+];
 
+export default function App() {
+  const [activeService, setActiveService] = useState(0);
+
+  useEffect(() => {
+    const id = "chanter-clean-mobile-css";
+    const old = document.getElementById(id);
+    if (old) old.remove();
+
+    const style = document.createElement("style");
+    style.id = id;
+    style.innerHTML = CSS;
+    document.head.appendChild(style);
+
+    document.documentElement.style.background = "#030611";
+    document.body.style.background = "#030611";
+    document.body.style.margin = "0";
+    document.body.style.overflowX = "hidden";
+
+    return () => {
+      const current = document.getElementById(id);
+      if (current) current.remove();
+    };
+  }, []);
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  return (
+    <main className="c-site">
+      <div className="c-bg" />
+      <div className="c-noise" />
+
+      <header className="c-nav">
+        <button className="c-brand" onClick={() => scrollTo("home")}>
+          WELCOME WORLD
+        </button>
+
+        <nav className="c-links">
+          <button onClick={() => scrollTo("systems")}>SYSTEMS</button>
+          <button onClick={() => scrollTo("work")}>WORK</button>
+          <button onClick={() => scrollTo("contact")}>CONTACT</button>
+        </nav>
+      </header>
+
+      <section id="home" className="c-section c-hero">
+        <div className="c-hero-inner">
+          <p className="c-kicker">AI DIRECTION / WORLDBUILDING / VISUAL SYSTEMS</p>
+          <h1>CHANTER</h1>
+          <p className="c-hero-copy">
+            Cinematic AI direction, creature design, and visual systems for the next wave of digital worlds.
+          </p>
+        </div>
+      </section>
+
+      <section id="systems" className="c-section c-systems">
+        <div className="c-section-head">
+          <p className="c-kicker">SYSTEMS</p>
+          <h2>What we build</h2>
+        </div>
+
+        <div className="c-service-list">
+          {services.map((item, index) => (
+            <button
+              key={item.title}
+              className={`c-service ${activeService === index ? "is-active" : ""}`}
+              onClick={() => setActiveService(index)}
+            >
+              <span className="c-service-num">{String(index + 1).padStart(2, "0")}</span>
+              <span className="c-service-title">{item.title}</span>
+              <span className="c-service-icon">{activeService === index ? "−" : "+"}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="c-panel">
+          <p className="c-panel-label">SERVICE WINDOW</p>
+          <h3>{services[activeService].title}</h3>
+          <p>{services[activeService].text}</p>
+        </div>
+      </section>
+
+      <section id="work" className="c-section c-work">
+        <div className="c-section-head">
+          <p className="c-kicker">CREATURE ARCHIVE</p>
+          <h2>Living prototypes</h2>
+          <p className="c-muted">
+            Early creature studies, cinematic tests, and visual experiments in progress.
+          </p>
+        </div>
+
+        <div className="c-grid">
+          {workItems.map((item, index) => (
+            <article className="c-card" key={item.title}>
+              <div className="c-card-image">
+                <span>{String(index + 1).padStart(3, "0")}</span>
+              </div>
+              <h3>{item.title}</h3>
+              <p>{item.tag}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="contact" className="c-section c-contact">
+        <p className="c-kicker">CONTACT</p>
+        <h2>Begin a world.</h2>
+        <p className="c-muted">
+          Available for select commissions, collaborations, and long-form creative systems.
+        </p>
+
+        <a className="c-email" href="mailto:cchanter1@gmail.com">
+          cchanter1@gmail.com
+        </a>
+      </section>
+    </main>
+  );
+}
+
+const CSS = `
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-html,
-body,
-#root {
-  width: 100%;
-  min-height: 100%;
-  margin: 0;
-  overflow-x: hidden;
+html {
+  scroll-behavior: smooth;
   background: #030611;
 }
 
 body {
-  -webkit-font-smoothing: antialiased;
-  text-rendering: geometricPrecision;
+  margin: 0;
+  background: #030611;
+  color: #eef3ff;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow-x: hidden;
 }
 
 button,
@@ -48,554 +189,476 @@ a {
 }
 
 button {
-  appearance: none !important;
-  -webkit-appearance: none !important;
-  background: transparent !important;
-  border: 0 !important;
-  color: inherit !important;
-  font: inherit !important;
-  padding: 0;
-  margin: 0;
-  border-radius: 0 !important;
-  box-shadow: none !important;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
 }
 
-.app-root {
+.c-site {
   position: relative;
-  width: 100%;
   min-height: 100dvh;
   overflow-x: hidden;
   background: #030611;
+  color: #eef3ff;
 }
 
-/* stop any background layer from creating sideways scroll */
-.app-root canvas,
-.app-root video,
-.app-root img,
-.background,
-.bg,
-.bg-layer,
-.background-visual,
-.visual-background {
-  max-width: 100vw;
+.c-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 70% 15%, rgba(90, 120, 180, 0.18), transparent 34%),
+    radial-gradient(circle at 20% 75%, rgba(80, 110, 170, 0.13), transparent 38%),
+    linear-gradient(180deg, #050817 0%, #02040d 100%);
 }
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
+.c-bg::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    repeating-radial-gradient(
+      ellipse at 50% 50%,
+      rgba(160, 190, 255, 0.065) 0px,
+      rgba(160, 190, 255, 0.065) 1px,
+      transparent 2px,
+      transparent 18px
+    );
+  opacity: 0.34;
+  transform: rotate(-18deg);
+}
 
+.c-noise {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 120px 120px;
+  opacity: 0.42;
+}
+
+.c-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  height: 76px;
+  padding: 0 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(3,6,17,0.95), rgba(3,6,17,0.66), transparent);
+  backdrop-filter: blur(12px);
+}
+
+.c-brand,
+.c-links button {
+  color: rgba(238, 243, 255, 0.78);
+  letter-spacing: 0.32em;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.c-brand {
+  letter-spacing: 0.24em;
+}
+
+.c-links {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.c-links button:hover,
+.c-brand:hover {
+  color: #ffffff;
+}
+
+.c-section {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  min-height: 100dvh;
+  padding: 120px 64px 80px;
+}
+
+.c-hero {
+  display: flex;
+  align-items: flex-end;
+}
+
+.c-hero-inner {
+  max-width: 980px;
+}
+
+.c-kicker {
+  margin: 0 0 22px;
+  color: rgba(190, 205, 235, 0.62);
+  font-size: 12px;
+  line-height: 1.6;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 22px;
+  color: #f4f7ff;
+  font-size: clamp(70px, 13vw, 180px);
+  line-height: 0.82;
+  letter-spacing: -0.09em;
+  font-weight: 500;
+}
+
+h2 {
+  margin-bottom: 28px;
+  color: #f3f6ff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(46px, 8vw, 96px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.96;
+  letter-spacing: -0.06em;
+}
+
+.c-hero-copy,
+.c-muted {
+  max-width: 680px;
+  color: rgba(222, 230, 250, 0.72);
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.c-section-head {
+  max-width: 900px;
+  margin-bottom: 70px;
+}
+
+.c-service-list {
+  width: 100%;
+  border-top: 1px solid rgba(230, 238, 255, 0.13);
+}
+
+.c-service {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 82px 1fr 40px;
+  align-items: center;
+  gap: 20px;
+  padding: 34px 0;
+  border-bottom: 1px solid rgba(230, 238, 255, 0.13);
+  text-align: left;
+}
+
+.c-service-num {
+  color: rgba(210, 222, 250, 0.42);
+  font-size: 15px;
+  letter-spacing: 0.16em;
+}
+
+.c-service-title {
+  color: rgba(238, 243, 255, 0.92);
+  font-size: clamp(38px, 6vw, 76px);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  font-weight: 400;
+}
+
+.c-service-icon {
+  justify-self: end;
+  color: rgba(220, 232, 255, 0.68);
+  font-size: 42px;
+  line-height: 1;
+}
+
+.c-service.is-active .c-service-title,
+.c-service:hover .c-service-title {
+  color: #ffffff;
+}
+
+.c-panel {
+  margin-top: 44px;
+  max-width: 760px;
+  padding: 34px;
+  border: 1px solid rgba(210, 225, 255, 0.18);
+  background: rgba(5, 10, 24, 0.58);
+  backdrop-filter: blur(18px);
+}
+
+.c-panel-label {
+  margin-bottom: 22px;
+  color: rgba(180, 198, 235, 0.55);
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.c-panel h3 {
+  margin-bottom: 14px;
+  color: #f5f8ff;
+  font-size: 32px;
+  letter-spacing: -0.04em;
+  font-weight: 400;
+}
+
+.c-panel p:last-child {
+  margin-bottom: 0;
+  color: rgba(220, 230, 250, 0.72);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.c-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 26px;
+}
+
+.c-card {
+  min-width: 0;
+}
+
+.c-card-image {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  margin-bottom: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(210, 225, 255, 0.14);
+  background:
+    radial-gradient(circle at 32% 28%, rgba(160, 235, 180, 0.65), transparent 18%),
+    radial-gradient(circle at 70% 45%, rgba(70, 150, 255, 0.46), transparent 24%),
+    linear-gradient(135deg, rgba(15, 28, 54, 0.95), rgba(4, 8, 19, 0.95));
+}
+
+.c-card-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, transparent, rgba(3,6,17,0.34)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 28px);
+}
+
+.c-card-image span {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 2;
+  color: rgba(238, 243, 255, 0.74);
+  letter-spacing: 0.22em;
+  font-size: 13px;
+}
+
+.c-card h3 {
+  margin: 0 0 6px;
+  color: #f2f6ff;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.c-card p {
+  margin: 0;
+  color: rgba(180, 198, 235, 0.58);
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.c-contact {
+  min-height: 76dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.c-email {
+  width: fit-content;
+  margin-top: 26px;
+  color: #f5f8ff;
+  font-size: clamp(30px, 6vw, 72px);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(245, 248, 255, 0.34);
+}
+
+.c-email:hover {
+  border-bottom-color: #ffffff;
+}
+
+/* MOBILE */
 @media (max-width: 768px) {
-  html,
-  body,
-  #root {
-    width: 100%;
+  .c-nav {
+    height: 64px;
+    padding: 0 22px;
+  }
+
+  .c-brand {
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    max-width: 150px;
+    text-align: left;
+  }
+
+  .c-links {
+    gap: 18px;
+  }
+
+  .c-links button {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+  }
+
+  .c-section {
+    min-height: auto;
+    padding: 104px 28px 72px;
+  }
+
+  .c-hero {
     min-height: 100dvh;
-    overflow-x: hidden !important;
+    align-items: flex-end;
+    padding-bottom: 96px;
   }
 
-  body {
-    background: #030611;
-  }
-
-  .app-root {
-    min-height: 100dvh;
-    overflow-x: hidden !important;
-  }
-
-  /* Disable custom cursor on touch screens */
-  .custom-cursor,
-  [class*="cursor"] {
-    display: none !important;
-  }
-
-  /* The browser was showing ugly default white buttons.
-     This forces every nav button/link back into the design. */
-  .app-root button,
-  .app-root a {
-    appearance: none !important;
-    -webkit-appearance: none !important;
-    background: transparent !important;
-    border: 0 !important;
-    color: inherit !important;
-    box-shadow: none !important;
-    outline: none !important;
-  }
-
-  /* Top navigation / navbar */
-  .app-root header,
-  .app-root nav:not(.scene-dots),
-  .navbar,
-  .nav,
-  .site-nav,
-  .topbar,
-  .top-bar {
-    max-width: 100vw !important;
-    overflow: hidden !important;
-  }
-
-  .navbar,
-  .site-nav,
-  .topbar,
-  .top-bar,
-  header {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    z-index: 80 !important;
-    width: 100% !important;
-    min-height: 64px !important;
-    padding: 14px 16px 8px !important;
-    display: flex !important;
-    align-items: flex-start !important;
-    justify-content: space-between !important;
-    gap: 14px !important;
-    background: linear-gradient(
-      to bottom,
-      rgba(3, 6, 17, 0.92),
-      rgba(3, 6, 17, 0.58),
-      rgba(3, 6, 17, 0)
-    ) !important;
-    backdrop-filter: blur(10px);
-  }
-
-  .navbar *,
-  .site-nav *,
-  .topbar *,
-  .top-bar *,
-  header * {
-    background: transparent !important;
-    border: 0 !important;
-    box-shadow: none !important;
-  }
-
-  /* Brand / WELCOME WORLD */
-  .brand,
-  .logo,
-  .wordmark,
-  .welcome,
-  .welcome-world,
-  [class*="brand"],
-  [class*="logo"],
-  [class*="wordmark"] {
-    color: rgba(245, 248, 255, 0.92) !important;
-    font-size: 14px !important;
-    line-height: 1.15 !important;
-    letter-spacing: 0.08em !important;
-    max-width: 124px !important;
-    text-align: left !important;
-    white-space: normal !important;
-  }
-
-  /* Nav links */
-  .navbar a,
-  .navbar button,
-  .site-nav a,
-  .site-nav button,
-  .topbar a,
-  .topbar button,
-  .top-bar a,
-  .top-bar button,
-  header a,
-  header button {
-    color: rgba(238, 243, 255, 0.66) !important;
-    font-size: 10px !important;
-    line-height: 1 !important;
-    letter-spacing: 0.22em !important;
-    text-transform: uppercase !important;
-    padding: 4px 0 !important;
-    min-width: auto !important;
-    height: auto !important;
-  }
-
-  .navbar a:hover,
-  .navbar button:hover,
-  .navbar a:focus,
-  .navbar button:focus,
-  .navbar .active,
-  .navbar [aria-current="page"],
-  header .active,
-  header [aria-current="page"] {
-    color: rgba(255, 255, 255, 0.96) !important;
-  }
-
-  /* If nav has an inner links container */
-  .nav-links,
-  .navbar__links,
-  .menu,
-  [class*="navLinks"],
-  [class*="links"] {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    gap: 16px !important;
-    flex-wrap: nowrap !important;
-    max-width: calc(100vw - 160px) !important;
-    overflow: hidden !important;
-  }
-
-  /* Scene dots were rotating/cutting on the left. Hide them on phone. */
-  .scene-dots,
-  .scroll-hint,
-  .side-label,
-  .side-nav,
-  .vertical-label,
-  .scene-index,
-  .scene-counter,
-  [class*="scrollHint"],
-  [class*="side"],
-  [class*="vertical"] {
-    display: none !important;
-  }
-
-  /* Scene shell safety */
-  .scene-shell,
-  .scenes,
-  .scene-stack,
-  main,
-  section {
-    width: 100% !important;
-    max-width: 100vw !important;
-    overflow-x: hidden !important;
-  }
-
-  /* Prevent 100vh mobile browser crop bugs */
-  .scene,
-  .hero,
-  .section,
-  section {
-    min-height: 100dvh !important;
-    height: auto !important;
-    max-width: 100vw !important;
-    padding-left: 24px !important;
-    padding-right: 24px !important;
-    overflow-x: hidden !important;
-  }
-
-  .hero {
-    padding-top: 112px !important;
-    padding-bottom: 72px !important;
-    display: flex !important;
-    align-items: flex-end !important;
+  .c-kicker {
+    margin-bottom: 18px;
+    font-size: 10px;
+    letter-spacing: 0.26em;
   }
 
   h1 {
-    font-size: clamp(42px, 15vw, 76px) !important;
-    line-height: 0.92 !important;
-    letter-spacing: -0.07em !important;
-    max-width: 100% !important;
+    font-size: clamp(66px, 20vw, 104px);
+    line-height: 0.84;
   }
 
   h2 {
-    font-size: clamp(30px, 9vw, 48px) !important;
-    line-height: 1.05 !important;
-    letter-spacing: -0.045em !important;
-    max-width: 100% !important;
+    font-size: clamp(42px, 13vw, 64px);
+    line-height: 0.98;
   }
 
-  p {
-    max-width: 100% !important;
+  .c-hero-copy,
+  .c-muted {
+    font-size: 15px;
+    line-height: 1.65;
   }
 
-  /* Systems / services section */
-  .capabilities,
-  .systems,
-  .services,
-  .service-list,
-  [class*="capabilities"],
-  [class*="systems"],
-  [class*="services"] {
-    width: 100% !important;
-    max-width: 100vw !important;
-    overflow-x: hidden !important;
+  .c-section-head {
+    margin-bottom: 44px;
   }
 
-  .capabilities,
-  .systems {
-    padding-top: 108px !important;
+  .c-service {
+    grid-template-columns: 38px minmax(0, 1fr) 26px;
+    gap: 12px;
+    padding: 28px 0;
   }
 
-  .service-row,
-  .system-row,
-  .service-item,
-  .capability-row,
-  [class*="serviceRow"],
-  [class*="systemRow"],
-  [class*="capabilityRow"] {
-    width: 100% !important;
-    max-width: 100vw !important;
-    display: grid !important;
-    grid-template-columns: 38px minmax(0, 1fr) 32px !important;
-    align-items: center !important;
-    gap: 12px !important;
-    padding: 28px 24px !important;
-    margin: 0 !important;
-    border-bottom: 1px solid rgba(230, 238, 255, 0.11) !important;
-    overflow: hidden !important;
+  .c-service-num {
+    font-size: 12px;
   }
 
-  .service-row h3,
-  .system-row h3,
-  .service-item h3,
-  .capability-row h3,
-  .service-title,
-  .capability-title,
-  [class*="serviceTitle"],
-  [class*="capabilityTitle"] {
-    font-size: clamp(28px, 8.8vw, 44px) !important;
-    line-height: 1.04 !important;
-    letter-spacing: -0.055em !important;
-    white-space: normal !important;
-    overflow-wrap: anywhere !important;
-    word-break: normal !important;
-    max-width: 100% !important;
+  .c-service-title {
+    font-size: clamp(29px, 8.5vw, 43px);
+    letter-spacing: -0.055em;
+    white-space: normal;
   }
 
-  .service-number,
-  .system-number,
-  .capability-number,
-  .index,
-  [class*="number"],
-  [class*="index"] {
-    font-size: 12px !important;
-    letter-spacing: 0.12em !important;
-    color: rgba(225, 234, 255, 0.44) !important;
+  .c-service-icon {
+    font-size: 30px;
   }
 
-  .plus,
-  .minus,
-  .service-icon,
-  .capability-icon,
-  [class*="icon"] {
-    justify-self: end !important;
-    color: rgba(230, 238, 255, 0.62) !important;
-    font-size: 26px !important;
-    line-height: 1 !important;
+  .c-panel {
+    margin-top: 34px;
+    padding: 24px;
   }
 
-  /* Service panel / modal */
-  .service-window,
-  .service-panel,
-  .modal,
-  .panel,
-  .drawer,
-  [class*="serviceWindow"],
-  [class*="servicePanel"] {
-    position: fixed !important;
-    left: 16px !important;
-    right: 16px !important;
-    bottom: 18px !important;
-    top: auto !important;
-    width: auto !important;
-    max-width: calc(100vw - 32px) !important;
-    max-height: calc(100dvh - 150px) !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    z-index: 90 !important;
-    padding: 24px !important;
-    background: rgba(5, 10, 24, 0.92) !important;
-    border: 1px solid rgba(205, 222, 255, 0.18) !important;
-    backdrop-filter: blur(18px);
+  .c-panel h3 {
+    font-size: 26px;
   }
 
-  .close,
-  .close-button,
-  .modal-close,
-  [class*="close"] {
-    position: sticky !important;
-    top: 0 !important;
-    margin-left: auto !important;
-    z-index: 100 !important;
-    width: 42px !important;
-    height: 42px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: rgba(255, 255, 255, 0.04) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    color: rgba(255, 255, 255, 0.9) !important;
+  .c-panel p:last-child {
+    font-size: 15px;
   }
 
-  /* Work / experiments */
-  .experiments,
-  .work,
-  [class*="experiments"],
-  [class*="work"] {
-    padding-top: 108px !important;
-    width: 100% !important;
-    max-width: 100vw !important;
-    overflow-x: hidden !important;
+  .c-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 16px;
   }
 
-  /* Footer / contact */
-  footer,
-  .footer,
-  .contact,
-  [class*="footer"],
-  [class*="contact"] {
-    width: 100% !important;
-    max-width: 100vw !important;
-    overflow-x: hidden !important;
-    padding: 108px 24px 110px !important;
+  .c-card h3 {
+    font-size: 18px;
   }
 
-  footer a,
-  .footer a,
-  .contact a {
-    overflow-wrap: anywhere !important;
-    word-break: break-word !important;
+  .c-card p {
+    font-size: 10px;
+    letter-spacing: 0.22em;
   }
 
-  /* Bottom return buttons must not become ugly browser buttons */
-  .return,
-  .return-button,
-  [class*="return"] {
-    background: transparent !important;
-    border: 0 !important;
-    color: rgba(245, 248, 255, 0.82) !important;
-    font-size: 12px !important;
-    letter-spacing: 0.22em !important;
-    text-transform: uppercase !important;
+  .c-contact {
+    min-height: 70dvh;
+  }
+
+  .c-email {
+    font-size: clamp(28px, 8vw, 44px);
+    overflow-wrap: anywhere;
   }
 }
 
-/* Very small phones */
-@media (max-width: 390px) {
-  .nav-links,
-  .navbar__links,
-  .menu,
-  [class*="navLinks"],
-  [class*="links"] {
-    gap: 10px !important;
+@media (max-width: 430px) {
+  .c-nav {
+    padding: 0 18px;
   }
 
-  .navbar a,
-  .navbar button,
-  header a,
-  header button {
-    font-size: 9px !important;
-    letter-spacing: 0.18em !important;
+  .c-brand {
+    font-size: 10px;
+    max-width: 120px;
   }
 
-  .brand,
-  .logo,
-  .wordmark,
-  .welcome,
-  .welcome-world,
-  [class*="brand"],
-  [class*="logo"],
-  [class*="wordmark"] {
-    font-size: 12px !important;
-    max-width: 104px !important;
+  .c-links {
+    gap: 13px;
   }
 
-  .service-row,
-  .system-row,
-  .service-item,
-  .capability-row,
-  [class*="serviceRow"],
-  [class*="systemRow"],
-  [class*="capabilityRow"] {
-    grid-template-columns: 30px minmax(0, 1fr) 24px !important;
-    padding-left: 18px !important;
-    padding-right: 18px !important;
+  .c-links button {
+    font-size: 9px;
+    letter-spacing: 0.18em;
   }
 
-  .service-row h3,
-  .system-row h3,
-  .service-item h3,
-  .capability-row h3,
-  .service-title,
-  .capability-title,
-  [class*="serviceTitle"],
-  [class*="capabilityTitle"] {
-    font-size: clamp(25px, 8.4vw, 38px) !important;
+  .c-section {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .c-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }
-`
 
-function MobileFixStyles() {
-  useEffect(() => {
-    const id = 'chanter-mobile-hard-fix'
-    const existing = document.getElementById(id)
+@media (max-width: 370px) {
+  .c-brand {
+    max-width: 95px;
+  }
 
-    if (existing) {
-      existing.innerHTML = MOBILE_FIX_CSS
-      return
-    }
+  .c-links {
+    gap: 9px;
+  }
 
-    const style = document.createElement('style')
-    style.id = id
-    style.innerHTML = MOBILE_FIX_CSS
-    document.head.appendChild(style)
-
-    return () => {
-      const current = document.getElementById(id)
-      if (current) current.remove()
-    }
-  }, [])
-
-  return null
+  .c-links button {
+    font-size: 8px;
+  }
 }
-
-export default function App() {
-  const { currentScene, goToScene } = useSceneScroll(SCENES.length)
-  const mousePos = useMouseParallax(1, 0.055)
-  const [introGone, setIntroGone] = useState(false)
-
-  return (
-    <div className="app-root">
-      <MobileFixStyles />
-
-      <CustomCursor />
-
-      <BackgroundVisual currentScene={currentScene} mousePos={mousePos} />
-
-      <Navbar currentScene={currentScene} goToScene={goToScene} />
-
-      <nav className="scene-dots" aria-label="Scene indicator">
-        {SCENES.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            className={`dot ${currentScene === i ? 'dot--active' : ''}`}
-            onClick={() => goToScene(i)}
-            aria-label={`Go to scene ${i + 1}`}
-            data-cursor="invert"
-          />
-        ))}
-      </nav>
-
-      <SceneShell currentScene={currentScene}>
-        {SCENES.map((SceneComponent, i) => (
-          <SceneComponent
-            key={i}
-            isActive={currentScene === i}
-            goToScene={goToScene}
-            mousePos={mousePos}
-          />
-        ))}
-      </SceneShell>
-
-      <TransitionOverlay currentScene={currentScene} />
-
-      <ScrollHint active={currentScene === 0} />
-
-      {!introGone && (
-        <IntroScreen onComplete={() => setIntroGone(true)} />
-      )}
-    </div>
-  )
-}
-
-function ScrollHint({ active }) {
-  return (
-    <div
-      className={`scroll-hint ${active ? 'scroll-hint--visible' : ''}`}
-      aria-hidden="true"
-    >
-      <span className="scroll-hint__line" />
-      <span className="scroll-hint__label">scroll</span>
-    </div>
-  )
-}
+`;
