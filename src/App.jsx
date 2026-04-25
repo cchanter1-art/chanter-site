@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./styles/app.css";
+import { Analytics } from "@vercel/analytics/react";
 
 const services = [
   {
@@ -24,16 +24,17 @@ const services = [
   },
 ];
 
-const workItems = Array.from({ length: 13 }, (_, i) => {
-  const num = String(i + 1).padStart(2, "0");
+const workItems = Array.from({ length: 13 }, (_, index) => {
+  const num = String(index + 1).padStart(2, "0");
+
   return {
     title: `Creature ${num}`,
     tag:
-      i === 0
+      index === 0
         ? "Prototype"
-        : i === 1
+        : index === 1
         ? "Motion Test"
-        : i === 2
+        : index === 2
         ? "Creature Study"
         : "Visual System",
     videoSrc: `/media/creature/creature_${num}.mp4`,
@@ -44,15 +45,17 @@ export default function App() {
   const [activeService, setActiveService] = useState(0);
 
   const scrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    const target = document.getElementById(id);
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
     <main className="c-site">
-      <div className="c-bg" aria-hidden="true" />
-      <div className="c-noise" aria-hidden="true" />
+      <Analytics />
+
+      <div className="c-bg" />
+      <div className="c-grid-bg" />
 
       <header className="c-nav">
         <button className="c-brand" type="button" onClick={() => scrollTo("home")}>
@@ -73,11 +76,6 @@ export default function App() {
           <p className="c-hero-copy">
             Cinematic AI direction, creature design, and visual systems for the next wave of digital worlds.
           </p>
-
-          <div className="c-socials" aria-label="Social links">
-            <a href="https://www.instagram.com/___chanter/" target="_blank" rel="noreferrer">Instagram</a>
-            <a href="https://www.tiktok.com/@__chanter" target="_blank" rel="noreferrer">TikTok</a>
-          </div>
         </div>
       </section>
 
@@ -102,56 +100,72 @@ export default function App() {
           ))}
         </div>
 
-        <aside className="c-panel">
+        <div className="c-panel">
           <p className="c-panel-label">SERVICE WINDOW</p>
           <h3>{services[activeService].title}</h3>
           <p>{services[activeService].text}</p>
-        </aside>
+        </div>
       </section>
 
       <section id="work" className="c-section c-work">
-        <div className="c-section-head">
-          <p className="c-kicker">CREATURE ARCHIVE</p>
-          <h2>Living prototypes</h2>
+        <div className="c-section-head c-work-head">
+          <p className="c-kicker">CREATURE FILE</p>
+          <h2>Archive</h2>
           <p className="c-muted">
-            Early creature studies, cinematic tests, and visual experiments in progress. The archive grows as the world becomes clearer.
+            Compact visual tests. The videos stay inside the archive grid so the page stays clean.
           </p>
         </div>
 
-        <div className="c-grid">
-          {workItems.map((item, index) => (
-            <article className="c-card" key={item.videoSrc}>
-              <div className="c-card-media">
-                <video
-                  className="c-card-video"
-                  src={item.videoSrc}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                />
-                <span className="c-card-number">{String(index + 1).padStart(3, "0")}</span>
-              </div>
-              <h3>{item.title}</h3>
-              <p>{item.tag}</p>
-            </article>
-          ))}
+        <div className="c-archive">
+          <div className="c-archive-top">
+            <span>CREATURE / MEDIA FILE</span>
+            <span>{workItems.length} ITEMS</span>
+          </div>
+
+          <div className="c-archive-grid">
+            {workItems.map((item, index) => (
+              <article className="c-card" key={item.videoSrc}>
+                <div className="c-card-media">
+                  <video
+                    src={item.videoSrc}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                  />
+                  <span className="c-card-num">{String(index + 1).padStart(3, "0")}</span>
+                </div>
+
+                <div className="c-card-info">
+                  <h3>{item.title}</h3>
+                  <p>{item.tag}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
       <section id="contact" className="c-section c-contact">
         <p className="c-kicker">CONTACT</p>
         <h2>Begin a world.</h2>
+
         <p className="c-muted">
           Available for select commissions, collaborations, and long-form creative systems.
         </p>
 
-        <a className="c-email" href="mailto:cchanter1@gmail.com">cchanter1@gmail.com</a>
+        <a className="c-email" href="mailto:cchanter1@gmail.com">
+          cchanter1@gmail.com
+        </a>
 
-        <div className="c-socials c-socials-bottom" aria-label="Social links">
-          <a href="https://www.instagram.com/___chanter/" target="_blank" rel="noreferrer">Instagram</a>
-          <a href="https://www.tiktok.com/@__chanter" target="_blank" rel="noreferrer">TikTok</a>
+        <div className="c-socials">
+          <a href="https://www.instagram.com/___chanter/" target="_blank" rel="noreferrer">
+            Instagram
+          </a>
+          <a href="https://www.tiktok.com/@__chanter" target="_blank" rel="noreferrer">
+            TikTok
+          </a>
         </div>
       </section>
     </main>
