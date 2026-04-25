@@ -1,159 +1,204 @@
-import React, { useMemo, useState } from 'react'
-import './styles/app.css'
+import React, { useState } from "react";
 
 const services = [
   {
-    title: 'AI Direction',
-    label: 'Direction',
-    text: 'Cinematic guidance for AI visuals, story moments, prompts, lighting, pacing, and final image language.',
+    title: "AI Direction",
+    text: "Cinematic direction for AI visuals, scenes, campaigns, and creative systems.",
   },
   {
-    title: 'Creature Design',
-    label: 'World Forms',
-    text: 'Alien creatures, mythic companions, dark fantasy silhouettes, emotional character beats, and prototype studies.',
+    title: "Creature Design",
+    text: "Original characters, alien creatures, dark fantasy forms, and visual identity tests.",
   },
   {
-    title: 'Visual Systems',
-    label: 'Identity',
-    text: 'Consistent visual rules for worlds, campaigns, interfaces, archives, and creator workflows.',
+    title: "Visual Systems",
+    text: "Worldbuilding, design language, UI mood, prompts, motion logic, and visual consistency.",
   },
   {
-    title: 'Experimental Film',
-    label: 'Motion',
-    text: 'Short cinematic tests, image-to-video scenes, atmospheric loops, music-led edits, and narrative fragments.',
+    title: "Experimental Film",
+    text: "Short cinematic prototypes, image-to-video scenes, music-driven edits, and atmosphere tests.",
   },
   {
-    title: 'Generative Design',
-    label: 'Tools',
-    text: 'AI-assisted web experiments, utility windows, prompt systems, and creative production pipelines.',
+    title: "Generative Design",
+    text: "AI-assisted creative workflows, brand visuals, web experiments, and creator tools.",
   },
-]
+];
 
-const work = [
-  { title: 'Creature 01', tag: 'Prototype', tone: 'acid' },
-  { title: 'Creature 02', tag: 'Motion Test', tone: 'blue' },
-  { title: 'World System', tag: 'Visual Study', tone: 'violet' },
-  { title: 'Neon Archive', tag: 'Experiment', tone: 'gold' },
-]
+const workItems = Array.from({ length: 13 }, (_, i) => {
+  const num = String(i + 1).padStart(2, "0");
+
+  return {
+    title: `Creature ${num}`,
+    tag:
+      i === 0
+        ? "Prototype"
+        : i === 1
+        ? "Motion Test"
+        : i === 2
+        ? "Creature Study"
+        : "Visual System",
+    videoSrc: `/media/creature/creature_${num}.mp4`,
+  };
+});
 
 export default function App() {
-  const [activeService, setActiveService] = useState(0)
-  const selectedService = useMemo(() => services[activeService], [activeService])
+  const [activeService, setActiveService] = useState(0);
 
-  const scrollToSection = (id) => {
-    const section = document.getElementById(id)
-    if (!section) return
-    section.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
-    <main className="chanter-site">
-      <div className="site-background" aria-hidden="true">
-        <div className="site-background__orb site-background__orb--one" />
-        <div className="site-background__orb site-background__orb--two" />
-        <div className="site-background__field" />
-        <div className="site-background__grain" />
-        <div className="site-background__vignette" />
-      </div>
+    <main className="c-site">
+      <div className="c-bg" />
+      <div className="c-noise" />
 
-      <header className="site-nav">
-        <button className="site-nav__brand" type="button" onClick={() => scrollToSection('home')}>
-          <span>WELCOME</span>
-          <span>WORLD</span>
+      <header className="c-nav">
+        <button className="c-brand" onClick={() => scrollTo("home")}>
+          WELCOME WORLD
         </button>
 
-        <nav className="site-nav__links" aria-label="Primary navigation">
-          <button type="button" onClick={() => scrollToSection('systems')}>Systems</button>
-          <button type="button" onClick={() => scrollToSection('work')}>Work</button>
-          <button type="button" onClick={() => scrollToSection('contact')}>Contact</button>
+        <nav className="c-links" aria-label="Main navigation">
+          <button onClick={() => scrollTo("systems")}>SYSTEMS</button>
+          <button onClick={() => scrollTo("work")}>WORK</button>
+          <button onClick={() => scrollTo("contact")}>CONTACT</button>
         </nav>
       </header>
 
-      <section id="home" className="section hero-section">
-        <div className="hero-section__content">
-          <p className="eyebrow">AI direction / worldbuilding / visual systems</p>
-          <h1>CHANTER</h1>
-          <p className="hero-section__copy">
-            Cinematic AI direction, creature design, and visual systems for digital worlds that feel alive.
-          </p>
-          <button className="primary-link" type="button" onClick={() => scrollToSection('systems')}>
-            Explore systems
-          </button>
-        </div>
+      <section id="home" className="c-section c-hero">
+        <div className="c-hero-inner">
+          <p className="c-kicker">AI DIRECTION / WORLDBUILDING / VISUAL SYSTEMS</p>
 
-        <p className="hero-section__status" aria-hidden="true">
-          Paphos / 2085 / visual engine online
-        </p>
+          <h1>CHANTER</h1>
+
+          <p className="c-hero-copy">
+            Cinematic AI direction, creature design, and visual systems for the
+            next wave of digital worlds.
+          </p>
+
+          <div className="c-socials">
+            <a
+              href="https://www.instagram.com/___chanter/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Instagram
+            </a>
+            <a
+              href="https://www.tiktok.com/@__chanter"
+              target="_blank"
+              rel="noreferrer"
+            >
+              TikTok
+            </a>
+          </div>
+        </div>
       </section>
 
-      <section id="systems" className="section systems-section">
-        <div className="section-heading">
-          <p className="eyebrow">Systems</p>
+      <section id="systems" className="c-section c-systems">
+        <div className="c-section-head">
+          <p className="c-kicker">SYSTEMS</p>
           <h2>What we build</h2>
         </div>
 
-        <div className="systems-layout">
-          <div className="service-list" role="list">
-            {services.map((service, index) => (
-              <button
-                key={service.title}
-                type="button"
-                className={`service-row ${index === activeService ? 'service-row--active' : ''}`}
-                onClick={() => setActiveService(index)}
-                aria-expanded={index === activeService}
-              >
-                <span className="service-row__number">{String(index + 1).padStart(2, '0')}</span>
-                <span className="service-row__main">
-                  <span className="service-row__title">{service.title}</span>
-                  <span className="service-row__label">{service.label}</span>
-                </span>
-                <span className="service-row__icon">{index === activeService ? '−' : '+'}</span>
-              </button>
-            ))}
-          </div>
+        <div className="c-service-list">
+          {services.map((item, index) => (
+            <button
+              key={item.title}
+              className={`c-service ${activeService === index ? "is-active" : ""}`}
+              onClick={() => setActiveService(index)}
+            >
+              <span className="c-service-num">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="c-service-title">{item.title}</span>
+              <span className="c-service-icon">
+                {activeService === index ? "−" : "+"}
+              </span>
+            </button>
+          ))}
+        </div>
 
-          <aside className="service-panel" aria-label="Selected service">
-            <p className="service-panel__label">Service window</p>
-            <h3>{selectedService.title}</h3>
-            <p>{selectedService.text}</p>
-          </aside>
+        <div className="c-panel">
+          <p className="c-panel-label">SERVICE WINDOW</p>
+          <h3>{services[activeService].title}</h3>
+          <p>{services[activeService].text}</p>
         </div>
       </section>
 
-      <section id="work" className="section work-section">
-        <div className="section-heading section-heading--wide">
-          <p className="eyebrow">Creature archive</p>
+      <section id="work" className="c-section c-work">
+        <div className="c-section-head">
+          <p className="c-kicker">CREATURE ARCHIVE</p>
           <h2>Living prototypes</h2>
-          <p className="section-copy">
-            Early creature studies, cinematic tests, and visual experiments in progress. The archive grows as the world becomes clearer.
+          <p className="c-muted">
+            Early creature studies, cinematic tests, and visual experiments in
+            progress. The archive grows as the world becomes clearer.
           </p>
         </div>
 
-        <div className="work-grid">
-          {work.map((item, index) => (
-            <article className={`work-card work-card--${item.tone}`} key={item.title}>
-              <div className="work-card__visual">
-                <span>{String(index + 1).padStart(3, '0')}</span>
+        <div className="c-grid">
+          {workItems.map((item, index) => (
+            <article className="c-card" key={item.videoSrc}>
+              <div className="c-card-image">
+                <video
+                  src={item.videoSrc}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
+                />
+
+                <span>{String(index + 1).padStart(3, "0")}</span>
               </div>
-              <div className="work-card__body">
-                <h3>{item.title}</h3>
-                <p>{item.tag}</p>
-              </div>
+
+              <h3>{item.title}</h3>
+              <p>{item.tag}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section id="contact" className="section contact-section">
-        <div>
-          <p className="eyebrow">Contact</p>
-          <h2>Begin a world.</h2>
-          <p className="section-copy">
-            Available for selected commissions, collaborations, visual systems, and long-form creative direction.
-          </p>
-          <a className="email-link" href="mailto:cchanter1@gmail.com">cchanter1@gmail.com</a>
+      <section id="contact" className="c-section c-contact">
+        <p className="c-kicker">CONTACT</p>
+
+        <h2>Begin a world.</h2>
+
+        <p className="c-muted">
+          Available for select commissions, collaborations, and long-form
+          creative systems.
+        </p>
+
+        <a className="c-email" href="mailto:cchanter1@gmail.com">
+          cchanter1@gmail.com
+        </a>
+
+        <div className="c-socials c-socials-bottom">
+          <a
+            href="https://www.instagram.com/___chanter/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Instagram
+          </a>
+          <a
+            href="https://www.tiktok.com/@__chanter"
+            target="_blank"
+            rel="noreferrer"
+          >
+            TikTok
+          </a>
         </div>
       </section>
     </main>
-  )
+  );
 }
