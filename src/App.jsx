@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import "./styles/app.css";
 
 const services = [
   {
