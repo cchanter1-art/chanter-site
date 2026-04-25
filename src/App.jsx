@@ -44,11 +44,27 @@ const workItems = Array.from({ length: 13 }, (_, index) => {
 
 export default function App() {
   const [activeService, setActiveService] = useState(0);
+  const [activeVideo, setActiveVideo] = useState(null);
 
   const scrollTo = (id) => {
     const target = document.getElementById(id);
     if (!target) return;
     target.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const openVideo = (index) => setActiveVideo(index);
+  const closeVideo = () => setActiveVideo(null);
+
+  const goPrevVideo = () => {
+    setActiveVideo((current) =>
+      current === null ? 0 : (current - 1 + workItems.length) % workItems.length
+    );
+  };
+
+  const goNextVideo = () => {
+    setActiveVideo((current) =>
+      current === null ? 0 : (current + 1) % workItems.length
+    );
   };
 
   return (
@@ -113,7 +129,7 @@ export default function App() {
           <p className="c-kicker">CREATURE FILE</p>
           <h2>Archive</h2>
           <p className="c-muted">
-            Compact visual tests. The videos stay inside the archive grid so the page stays clean.
+            Compact visual tests.
           </p>
         </div>
 
@@ -126,7 +142,12 @@ export default function App() {
           <div className="c-archive-grid">
             {workItems.map((item, index) => (
               <article className="c-card" key={item.videoSrc}>
-                <div className="c-card-media">
+                <button
+                  className="c-card-media"
+                  type="button"
+                  onClick={() => openVideo(index)}
+                  aria-label={`Open ${item.title}`}
+                >
                   <video
                     src={item.videoSrc}
                     autoPlay
@@ -136,7 +157,8 @@ export default function App() {
                     preload="metadata"
                   />
                   <span className="c-card-num">{String(index + 1).padStart(3, "0")}</span>
-                </div>
+                  <span className="c-card-open">OPEN</span>
+                </button>
 
                 <div className="c-card-info">
                   <h3>{item.title}</h3>
@@ -169,6 +191,46 @@ export default function App() {
           </a>
         </div>
       </section>
+
+      {activeVideo !== null && (
+        <div className="c-lightbox" role="dialog" aria-modal="true" aria-label="Video preview">
+          <button className="c-lightbox-backdrop" type="button" onClick={closeVideo} aria-label="Close video" />
+
+          <div className="c-lightbox-window">
+            <div className="c-lightbox-top">
+              <div>
+                <p>{workItems[activeVideo].tag}</p>
+                <h3>{workItems[activeVideo].title}</h3>
+              </div>
+
+              <button className="c-lightbox-close" type="button" onClick={closeVideo}>
+                CLOSE
+              </button>
+            </div>
+
+            <div className="c-lightbox-media">
+              <video
+                key={workItems[activeVideo].videoSrc}
+                src={workItems[activeVideo].videoSrc}
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+              />
+            </div>
+
+            <div className="c-lightbox-controls">
+              <button type="button" onClick={goPrevVideo}>← PREV</button>
+              <span>
+                {String(activeVideo + 1).padStart(2, "0")} / {String(workItems.length).padStart(2, "0")}
+              </span>
+              <button type="button" onClick={goNextVideo}>NEXT →</button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </main>
   );
 }
