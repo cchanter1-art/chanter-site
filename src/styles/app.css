@@ -1255,3 +1255,168 @@ h2 {
     opacity: 0.36;
   }
 }
+/* ============================================================
+   Mobile archive folder view
+   Desktop keeps full archive grid.
+   Mobile shows one clean folder card, then opens full-screen archive.
+   ============================================================ */
+
+.c-mobile-folder,
+.c-mobile-archive-page {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .c-desktop-archive {
+    display: none;
+  }
+
+  .c-mobile-folder {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: 190px;
+    padding: 22px;
+    overflow: hidden;
+    text-align: left;
+    border: 1px solid rgba(210, 225, 255, 0.18);
+    background:
+      radial-gradient(circle at 78% 22%, rgba(150, 190, 255, 0.13), transparent 34%),
+      radial-gradient(circle at 28% 86%, rgba(70, 210, 170, 0.12), transparent 36%),
+      rgba(4, 8, 20, 0.58);
+    backdrop-filter: blur(16px);
+    box-shadow:
+      inset 0 0 70px rgba(120, 165, 255, 0.045),
+      0 22px 70px rgba(0, 0, 0, 0.24);
+  }
+
+  .c-mobile-folder::before {
+    content: "";
+    position: absolute;
+    inset: 16px 16px auto auto;
+    width: 86px;
+    height: 54px;
+    border: 1px solid rgba(210, 225, 255, 0.14);
+    border-bottom: 0;
+    opacity: 0.34;
+  }
+
+  .c-mobile-folder::after {
+    content: "";
+    position: absolute;
+    inset: auto 18px 18px 18px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(210, 225, 255, 0.2),
+      transparent
+    );
+  }
+
+  .c-mobile-folder-label,
+  .c-mobile-folder-count,
+  .c-mobile-folder-sub {
+    position: relative;
+    z-index: 1;
+    display: block;
+    color: rgba(190, 205, 235, 0.66);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .c-mobile-folder-count {
+    margin-top: 8px;
+    color: rgba(238, 243, 255, 0.48);
+  }
+
+  .c-mobile-folder-title {
+    position: relative;
+    z-index: 1;
+    display: block;
+    margin-top: 46px;
+    color: #f5f8ff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(38px, 12vw, 58px);
+    font-style: italic;
+    line-height: 0.92;
+    letter-spacing: -0.06em;
+  }
+
+  .c-mobile-folder-sub {
+    margin-top: 18px;
+    color: rgba(245, 248, 255, 0.78);
+  }
+
+  .c-mobile-archive-page {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: block;
+    overflow-y: auto;
+    padding: 86px 18px 36px;
+    background:
+      radial-gradient(circle at 24% 20%, rgba(92, 116, 190, 0.18), transparent 34%),
+      radial-gradient(circle at 82% 76%, rgba(52, 120, 110, 0.18), transparent 38%),
+      rgba(3, 6, 17, 0.96);
+    backdrop-filter: blur(20px);
+  }
+
+  .c-mobile-archive-top {
+    position: sticky;
+    top: -86px;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    gap: 14px;
+    margin: -86px -18px 22px;
+    padding: 20px 18px 18px;
+    border-bottom: 1px solid rgba(230, 238, 255, 0.1);
+    background: linear-gradient(
+      to bottom,
+      rgba(3, 6, 17, 0.96),
+      rgba(3, 6, 17, 0.82)
+    );
+    backdrop-filter: blur(16px);
+  }
+
+  .c-mobile-archive-top button,
+  .c-mobile-archive-top span,
+  .c-mobile-archive-top p {
+    margin: 0;
+    color: rgba(190, 205, 235, 0.72);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .c-mobile-archive-top h2 {
+    margin: 5px 0 0;
+    font-size: 34px;
+    line-height: 0.95;
+  }
+
+  .c-mobile-archive-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 12px;
+  }
+
+  .c-mobile-archive-grid .c-card h3 {
+    font-size: 14px;
+  }
+
+  .c-mobile-archive-grid .c-card p {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 430px) {
+  .c-mobile-archive-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

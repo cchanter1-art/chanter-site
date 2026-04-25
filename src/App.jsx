@@ -46,6 +46,7 @@ const workItems = Array.from({ length: 13 }, (_, index) => {
 export default function App() {
   const [activeService, setActiveService] = useState(0);
   const [activeVideo, setActiveVideo] = useState(null);
+  const [mobileArchiveOpen, setMobileArchiveOpen] = useState(false);
   const lightboxVideoRef = useRef(null);
 
   const scrollTo = (id) => {
@@ -69,6 +70,40 @@ export default function App() {
     }
   }, [activeVideo]);
 
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        if (activeVideo !== null) {
+          setActiveVideo(null);
+          return;
+        }
+
+        if (mobileArchiveOpen) {
+          setMobileArchiveOpen(false);
+        }
+      }
+
+      if (activeVideo !== null && event.key === "ArrowLeft") {
+        goPrevVideo();
+      }
+
+      if (activeVideo !== null && event.key === "ArrowRight") {
+        goNextVideo();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [activeVideo, mobileArchiveOpen]);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileArchiveOpen ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileArchiveOpen]);
+
   const openVideo = (index) => setActiveVideo(index);
   const closeVideo = () => setActiveVideo(null);
 
@@ -83,6 +118,33 @@ export default function App() {
       current === null ? 0 : (current + 1) % workItems.length
     );
   };
+
+  const renderWorkCard = (item, index) => (
+    <article className="c-card" key={item.videoSrc}>
+      <button
+        className="c-card-media"
+        type="button"
+        onClick={() => openVideo(index)}
+        aria-label={`Open ${item.title}`}
+      >
+        <video
+          src={item.videoSrc}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
+        <span className="c-card-num">{String(index + 1).padStart(3, "0")}</span>
+        <span className="c-card-open">OPEN</span>
+      </button>
+
+      <div className="c-card-info">
+        <h3>{item.title}</h3>
+        <p>{item.tag}</p>
+      </div>
+    </article>
+  );
 
   return (
     <main className="c-site">
@@ -174,39 +236,26 @@ export default function App() {
           <p className="c-muted">Compact visual tests.</p>
         </div>
 
-        <div className="c-archive">
+        <button
+          className="c-mobile-folder"
+          type="button"
+          onClick={() => setMobileArchiveOpen(true)}
+          aria-label="Open creature archive"
+        >
+          <span className="c-mobile-folder-label">CREATURE / MEDIA FILE</span>
+          <span className="c-mobile-folder-count">{workItems.length} ITEMS</span>
+          <span className="c-mobile-folder-title">Visual archive</span>
+          <span className="c-mobile-folder-sub">Open folder →</span>
+        </button>
+
+        <div className="c-archive c-desktop-archive">
           <div className="c-archive-top">
             <span>CREATURE / MEDIA FILE</span>
             <span>{workItems.length} ITEMS</span>
           </div>
 
           <div className="c-archive-grid">
-            {workItems.map((item, index) => (
-              <article className="c-card" key={item.videoSrc}>
-                <button
-                  className="c-card-media"
-                  type="button"
-                  onClick={() => openVideo(index)}
-                  aria-label={`Open ${item.title}`}
-                >
-                  <video
-                    src={item.videoSrc}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                  />
-                  <span className="c-card-num">{String(index + 1).padStart(3, "0")}</span>
-                  <span className="c-card-open">OPEN</span>
-                </button>
-
-                <div className="c-card-info">
-                  <h3>{item.title}</h3>
-                  <p>{item.tag}</p>
-                </div>
-              </article>
-            ))}
+            {workItems.map((item, index) => renderWorkCard(item, index))}
           </div>
         </div>
       </section>
@@ -232,6 +281,27 @@ export default function App() {
           </a>
         </div>
       </section>
+
+      {mobileArchiveOpen && (
+        <section className="c-mobile-archive-page" aria-label="Creature archive folder">
+          <div className="c-mobile-archive-top">
+            <button type="button" onClick={() => setMobileArchiveOpen(false)}>
+              ← BACK
+            </button>
+
+            <div>
+              <p>CREATURE / MEDIA FILE</p>
+              <h2>Archive</h2>
+            </div>
+
+            <span>{workItems.length} ITEMS</span>
+          </div>
+
+          <div className="c-mobile-archive-grid">
+            {workItems.map((item, index) => renderWorkCard(item, index))}
+          </div>
+        </section>
+      )}
 
       {activeVideo !== null && (
         <div className="c-lightbox" role="dialog" aria-modal="true" aria-label="Video preview">
@@ -271,7 +341,8 @@ export default function App() {
                 ← PREV
               </button>
               <span>
-                {String(activeVideo + 1).padStart(2, "0")} / {String(workItems.length).padStart(2, "0")}
+                {String(activeVideo + 1).padStart(2, "0")} /{" "}
+                {String(workItems.length).padStart(2, "0")}
               </span>
               <button type="button" onClick={goNextVideo}>
                 NEXT →
