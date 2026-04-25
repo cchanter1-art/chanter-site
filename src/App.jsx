@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import ParticleArchiveScene from "./components/ParticleArchiveScene";
 import "./styles/app.css";
 
 const services = [
@@ -88,6 +89,7 @@ export default function App() {
       <Analytics />
 
       <div className="c-bg" />
+      <ParticleArchiveScene />
       <div className="c-grid-bg" />
 
       <header className="c-nav">
@@ -96,9 +98,15 @@ export default function App() {
         </button>
 
         <nav className="c-links" aria-label="Main navigation">
-          <button type="button" onClick={() => scrollTo("systems")}>SYSTEMS</button>
-          <button type="button" onClick={() => scrollTo("work")}>WORK</button>
-          <button type="button" onClick={() => scrollTo("contact")}>CONTACT</button>
+          <button type="button" onClick={() => scrollTo("systems")}>
+            SYSTEMS
+          </button>
+          <button type="button" onClick={() => scrollTo("work")}>
+            WORK
+          </button>
+          <button type="button" onClick={() => scrollTo("contact")}>
+            CONTACT
+          </button>
         </nav>
       </header>
 
@@ -163,9 +171,7 @@ export default function App() {
         <div className="c-section-head c-work-head">
           <p className="c-kicker">CREATURE FILE</p>
           <h2>Archive</h2>
-          <p className="c-muted">
-            Compact visual tests.
-          </p>
+          <p className="c-muted">Compact visual tests.</p>
         </div>
 
         <div className="c-archive">
@@ -229,7 +235,12 @@ export default function App() {
 
       {activeVideo !== null && (
         <div className="c-lightbox" role="dialog" aria-modal="true" aria-label="Video preview">
-          <button className="c-lightbox-backdrop" type="button" onClick={closeVideo} aria-label="Close video" />
+          <button
+            className="c-lightbox-backdrop"
+            type="button"
+            onClick={closeVideo}
+            aria-label="Close video"
+          />
 
           <div className="c-lightbox-window">
             <div className="c-lightbox-top">
@@ -256,16 +267,19 @@ export default function App() {
             </div>
 
             <div className="c-lightbox-controls">
-              <button type="button" onClick={goPrevVideo}>← PREV</button>
+              <button type="button" onClick={goPrevVideo}>
+                ← PREV
+              </button>
               <span>
                 {String(activeVideo + 1).padStart(2, "0")} / {String(workItems.length).padStart(2, "0")}
               </span>
-              <button type="button" onClick={goNextVideo}>NEXT →</button>
+              <button type="button" onClick={goNextVideo}>
+                NEXT →
+              </button>
             </div>
           </div>
         </div>
       )}
-
     </main>
   );
 }
