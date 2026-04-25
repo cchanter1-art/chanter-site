@@ -1162,3 +1162,49 @@ h2 {
     opacity: 0.15;
   }
 }
+
+/* FINAL MOBILE ONLY — make the fixed background illusion visible under CHANTER */
+@media (max-width: 768px) {
+  .c-hero-illusion {
+    position: fixed;
+    top: 36vh;
+    right: -18vw;
+    width: 112vw;
+    height: 72vh;
+    opacity: 0.34;
+    z-index: 2;
+  }
+
+  .c-glass-core {
+    top: 0;
+    left: 58%;
+    translate: -50% 0;
+    width: 88vw;
+    height: 104vw;
+  }
+
+  .c-hero-illusion::before {
+    opacity: 0.72;
+    filter: blur(54px);
+  }
+
+  .c-hero-illusion::after {
+    opacity: 0.72;
+  }
+}
+
+@media (max-width: 520px) {
+  .c-hero-illusion {
+    top: 40vh;
+    right: -24vw;
+    width: 126vw;
+    height: 76vh;
+    opacity: 0.30;
+  }
+
+  .c-glass-core {
+    left: 57%;
+    width: 98vw;
+    height: 116vw;
+  }
+}
