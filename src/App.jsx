@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import "./styles/app.css";
 
@@ -45,12 +45,28 @@ const workItems = Array.from({ length: 13 }, (_, index) => {
 export default function App() {
   const [activeService, setActiveService] = useState(0);
   const [activeVideo, setActiveVideo] = useState(null);
+  const lightboxVideoRef = useRef(null);
 
   const scrollTo = (id) => {
     const target = document.getElementById(id);
     if (!target) return;
     target.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
+  useEffect(() => {
+    if (activeVideo === null || !lightboxVideoRef.current) return;
+
+    const video = lightboxVideoRef.current;
+    video.muted = false;
+    video.volume = 1;
+
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(() => {
+        // Browser may block sound in rare cases; controls remain visible for manual play.
+      });
+    }
+  }, [activeVideo]);
 
   const openVideo = (index) => setActiveVideo(index);
   const closeVideo = () => setActiveVideo(null);
@@ -93,6 +109,25 @@ export default function App() {
           <p className="c-hero-copy">
             Cinematic AI direction, creature design, and visual systems for the next wave of digital worlds.
           </p>
+        </div>
+
+        <div className="c-hero-illusion" aria-hidden="true">
+          <div className="c-light-beam beam-a" />
+          <div className="c-light-beam beam-b" />
+          <div className="c-light-beam beam-c" />
+
+          <div className="c-glass-core">
+            <span className="c-crack c-crack-1" />
+            <span className="c-crack c-crack-2" />
+            <span className="c-crack c-crack-3" />
+            <span className="c-crack c-crack-4" />
+            <span className="c-crack c-crack-5" />
+
+            <span className="c-shard shard-1" />
+            <span className="c-shard shard-2" />
+            <span className="c-shard shard-3" />
+            <span className="c-shard shard-4" />
+          </div>
         </div>
       </section>
 
@@ -210,10 +245,10 @@ export default function App() {
 
             <div className="c-lightbox-media">
               <video
+                ref={lightboxVideoRef}
                 key={workItems[activeVideo].videoSrc}
                 src={workItems[activeVideo].videoSrc}
                 autoPlay
-                muted
                 loop
                 playsInline
                 controls
