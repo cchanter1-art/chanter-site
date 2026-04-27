@@ -1753,3 +1753,1014 @@ h2 {
     font-size: 7px;
   }
 }
+/* ============================================================
+   Route folders + Google login layer
+   ============================================================ */
+
+.c-folder-preview {
+  position: relative;
+  display: block;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.c-folder-preview:hover {
+  transform: translateY(-3px);
+  border-color: rgba(210, 225, 255, 0.28);
+  background: rgba(6, 12, 28, 0.62);
+  box-shadow: 0 22px 80px rgba(0, 0, 0, 0.22), inset 0 0 80px rgba(120, 165, 255, 0.045);
+}
+
+.c-preview-card {
+  pointer-events: none;
+}
+
+.c-preview-media {
+  cursor: pointer;
+}
+
+.c-folder-open {
+  position: absolute;
+  right: 22px;
+  bottom: 18px;
+  z-index: 5;
+  color: rgba(245, 248, 255, 0.78);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.c-folder-preview:hover .c-folder-open {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.c-auth-button,
+.c-auth-chip,
+.c-user-chip {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid rgba(210, 225, 255, 0.16);
+  background: rgba(5, 10, 24, 0.48);
+  color: rgba(238, 243, 255, 0.78);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0 13px;
+  backdrop-filter: blur(14px);
+  transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.c-auth-button:hover,
+.c-user-chip:hover {
+  color: #ffffff;
+  border-color: rgba(210, 225, 255, 0.30);
+  background: rgba(9, 16, 35, 0.70);
+}
+
+.c-auth-button:disabled,
+.c-user-chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.c-user-chip {
+  max-width: 260px;
+  padding-left: 8px;
+}
+
+.c-user-chip img,
+.c-user-chip > span {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(210, 225, 255, 0.12);
+  color: rgba(238, 243, 255, 0.86);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.c-user-chip strong {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+}
+
+.c-user-chip em {
+  color: rgba(190, 205, 235, 0.62);
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+}
+
+.c-auth-gate {
+  position: relative;
+  z-index: 4;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 130px 64px 80px;
+}
+
+.c-auth-gate h2 {
+  margin-bottom: 18px;
+}
+
+.c-auth-gate .c-auth-button {
+  margin-top: 30px;
+  min-height: 44px;
+  padding: 0 18px;
+}
+
+.c-auth-note {
+  max-width: 520px;
+  margin: 18px 0 0;
+  color: rgba(240, 190, 160, 0.72);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.c-folder-page {
+  min-height: 100dvh;
+  padding-top: 118px;
+}
+
+.c-folder-page-head {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 24px;
+  margin-bottom: 26px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(230, 238, 255, 0.1);
+}
+
+.c-folder-page-head button,
+.c-folder-page-head p,
+.c-folder-page-head span {
+  margin: 0;
+  color: rgba(190, 205, 235, 0.66);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.c-folder-page-head button:hover {
+  color: #ffffff;
+}
+
+.c-folder-page-head h2 {
+  margin: 6px 0 0;
+}
+
+.c-folder-archive {
+  position: relative;
+  z-index: 4;
+}
+
+@media (max-width: 768px) {
+  .c-links {
+    gap: 10px;
+  }
+
+  .c-auth-button,
+  .c-auth-chip,
+  .c-user-chip {
+    min-height: 26px;
+    padding: 0 8px;
+    font-size: 7px;
+    letter-spacing: 0.12em;
+  }
+
+  .c-user-chip img,
+  .c-user-chip > span {
+    width: 16px;
+    height: 16px;
+    font-size: 8px;
+  }
+
+  .c-user-chip strong,
+  .c-user-chip em {
+    display: none;
+  }
+
+  .c-auth-gate {
+    min-height: 100svh;
+    padding: calc(94px + env(safe-area-inset-top)) 18px 48px;
+  }
+
+  .c-auth-gate .c-auth-button {
+    min-height: 38px;
+  }
+
+  .c-folder-page {
+    padding: calc(82px + env(safe-area-inset-top)) 14px 28px;
+  }
+
+  .c-folder-page-head {
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+  }
+
+  .c-folder-page-head button,
+  .c-folder-page-head p,
+  .c-folder-page-head span {
+    font-size: 8px;
+    letter-spacing: 0.16em;
+  }
+
+  .c-folder-page-head h2 {
+    margin-top: 4px;
+    font-size: 28px;
+    line-height: 0.95;
+  }
+}
+
+/* ============================================================
+   Closed folder homepage preview — not an open archive grid
+   ============================================================ */
+
+.c-closed-folder {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  min-height: 260px;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.72fr) minmax(280px, 1fr);
+  gap: 28px;
+  align-items: stretch;
+  overflow: hidden;
+  padding: 24px;
+  color: inherit;
+  text-align: left;
+  border: 1px solid rgba(210, 225, 255, 0.16);
+  background:
+    radial-gradient(circle at 74% 22%, rgba(130, 168, 255, 0.12), transparent 34%),
+    radial-gradient(circle at 18% 84%, rgba(70, 210, 170, 0.10), transparent 36%),
+    rgba(4, 8, 20, 0.48);
+  backdrop-filter: blur(15px);
+  box-shadow:
+    inset 0 0 90px rgba(120, 165, 255, 0.035),
+    0 24px 90px rgba(0, 0, 0, 0.18);
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.c-closed-folder:hover {
+  transform: translateY(-3px);
+  border-color: rgba(210, 225, 255, 0.30);
+  background:
+    radial-gradient(circle at 74% 22%, rgba(130, 168, 255, 0.16), transparent 34%),
+    radial-gradient(circle at 18% 84%, rgba(70, 210, 170, 0.12), transparent 36%),
+    rgba(6, 12, 28, 0.64);
+  box-shadow:
+    inset 0 0 110px rgba(120, 165, 255, 0.055),
+    0 30px 110px rgba(0, 0, 0, 0.25);
+}
+
+.c-closed-folder-line {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  top: 58px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(210, 225, 255, 0.16), transparent 72%);
+}
+
+.c-closed-folder-meta {
+  position: absolute;
+  top: 22px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  color: rgba(190, 205, 235, 0.66);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.c-closed-folder-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-top: 62px;
+  padding-bottom: 6px;
+}
+
+.c-closed-folder-title {
+  color: #f5f8ff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(58px, 7vw, 106px);
+  font-style: italic;
+  line-height: 0.88;
+  letter-spacing: -0.075em;
+}
+
+.c-closed-folder-copy {
+  max-width: 420px;
+  margin-top: 18px;
+  color: rgba(222, 230, 250, 0.72);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.c-closed-folder-strip {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  align-self: end;
+  padding-top: 62px;
+  padding-bottom: 26px;
+  opacity: 0.78;
+}
+
+.c-closed-folder-thumb {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 9 / 14;
+  overflow: hidden;
+  border: 1px solid rgba(210, 225, 255, 0.13);
+  background: #071022;
+}
+
+.c-closed-folder-thumb video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.92) brightness(0.82);
+  transform: scale(1.03);
+}
+
+.c-closed-folder-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(3,6,17,0.05), rgba(3,6,17,0.42)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 28px);
+}
+
+.c-closed-folder-thumb em {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  color: rgba(238, 243, 255, 0.72);
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.20em;
+}
+
+.c-folder-open.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .c-mobile-folder,
+  .c-desktop-archive {
+    display: none !important;
+  }
+
+  .c-closed-folder {
+    min-height: 184px;
+    display: block;
+    padding: 18px;
+  }
+
+  .c-closed-folder-line {
+    left: 18px;
+    right: 18px;
+    top: 48px;
+  }
+
+  .c-closed-folder-meta {
+    top: 16px;
+    left: 18px;
+    right: 18px;
+    font-size: 8px;
+    letter-spacing: 0.18em;
+  }
+
+  .c-closed-folder-body {
+    padding-top: 54px;
+    padding-bottom: 34px;
+  }
+
+  .c-closed-folder-title {
+    font-size: clamp(38px, 12vw, 58px);
+  }
+
+  .c-closed-folder-copy {
+    max-width: 30ch;
+    margin-top: 12px;
+    font-size: 10px;
+    line-height: 1.45;
+  }
+
+  .c-closed-folder-strip {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    width: 35%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    padding: 0;
+    opacity: 0.32;
+  }
+
+  .c-closed-folder-thumb:nth-child(n + 3) {
+    display: none;
+  }
+
+  .c-folder-open {
+    right: 18px;
+    bottom: 16px;
+    font-size: 8px;
+    letter-spacing: 0.16em;
+  }
+}
+
+/* ============================================================
+   Homepage archive: closed folder only, no video previews
+   Added after restore fix
+   ============================================================ */
+
+.c-closed-folder {
+  min-height: 320px;
+  grid-template-columns: minmax(0, 1fr);
+  padding: 30px;
+}
+
+.c-closed-folder::before {
+  content: "";
+  position: absolute;
+  top: 72px;
+  right: clamp(26px, 6vw, 90px);
+  width: clamp(170px, 18vw, 280px);
+  height: clamp(112px, 12vw, 178px);
+  border-radius: 18px;
+  border: 1px solid rgba(210, 225, 255, 0.18);
+  background:
+    linear-gradient(180deg, rgba(165, 198, 255, 0.15), rgba(86, 120, 180, 0.08)),
+    rgba(8, 16, 34, 0.68);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 22px 70px rgba(0,0,0,0.24);
+  opacity: 0.72;
+}
+
+.c-closed-folder::after {
+  content: "";
+  position: absolute;
+  top: 52px;
+  right: calc(clamp(26px, 6vw, 90px) + clamp(82px, 8vw, 130px));
+  width: clamp(70px, 8vw, 120px);
+  height: 30px;
+  border-radius: 14px 14px 0 0;
+  border: 1px solid rgba(210, 225, 255, 0.18);
+  border-bottom: 0;
+  background: rgba(8, 16, 34, 0.72);
+  opacity: 0.72;
+}
+
+.c-closed-folder-strip {
+  display: none !important;
+}
+
+.c-closed-folder-body {
+  max-width: 620px;
+  padding-top: 92px;
+  padding-bottom: 34px;
+  position: relative;
+  z-index: 2;
+}
+
+.c-folder-open.is-visible {
+  position: absolute;
+  right: 30px;
+  bottom: 26px;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .c-closed-folder {
+    min-height: 260px;
+    padding: 22px 18px;
+  }
+
+  .c-closed-folder::before {
+    top: 82px;
+    right: 18px;
+    width: 118px;
+    height: 78px;
+    opacity: 0.42;
+  }
+
+  .c-closed-folder::after {
+    top: 68px;
+    right: 86px;
+    width: 54px;
+    height: 20px;
+    opacity: 0.42;
+  }
+
+  .c-closed-folder-body {
+    padding-top: 76px;
+    padding-bottom: 38px;
+  }
+
+  .c-folder-open.is-visible {
+    right: 18px;
+    bottom: 18px;
+  }
+}
+
+/* ============================================================
+   Auth modal for folder click
+   ============================================================ */
+
+.c-auth-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(2, 5, 14, 0.72);
+  backdrop-filter: blur(18px);
+}
+
+.c-auth-modal-window {
+  position: relative;
+  width: min(520px, 100%);
+  padding: 36px 32px 30px;
+  border: 1px solid rgba(210, 225, 255, 0.16);
+  background:
+    radial-gradient(circle at 78% 16%, rgba(120, 170, 255, 0.08), transparent 34%),
+    rgba(5, 9, 22, 0.94);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
+}
+
+.c-auth-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  color: rgba(238, 243, 255, 0.72);
+  font-size: 24px;
+  line-height: 1;
+}
+
+.c-auth-modal-close:hover {
+  color: #fff;
+}
+
+.c-auth-modal-kicker {
+  margin: 0 0 14px;
+  color: rgba(190, 205, 235, 0.66);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.c-auth-modal-window h3 {
+  margin: 0 0 14px;
+  color: #f5f8ff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(42px, 6vw, 58px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+}
+
+.c-auth-modal-copy {
+  margin: 0 0 24px;
+  color: rgba(220, 230, 250, 0.72);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.c-auth-modal-btn {
+  min-width: 240px;
+  padding: 14px 18px;
+  border: 1px solid rgba(210, 225, 255, 0.18);
+  background: rgba(11, 18, 36, 0.86);
+  color: #f5f8ff;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  font-weight: 800;
+  text-transform: uppercase;
+  transition: border-color 180ms ease, background 180ms ease;
+}
+
+.c-auth-modal-btn:hover {
+  border-color: rgba(230, 238, 255, 0.30);
+  background: rgba(16, 26, 50, 0.95);
+}
+
+.c-auth-modal-error {
+  margin: 16px 0 0;
+  color: #ffb7b7;
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .c-auth-modal-window {
+    padding: 28px 20px 22px;
+  }
+
+  .c-auth-modal-window h3 {
+    font-size: 40px;
+  }
+
+  .c-auth-modal-btn {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* ============================================================
+   FINAL: minimal homepage folder only
+   ============================================================ */
+
+.c-work-minimal-folder {
+  padding-top: 104px;
+  padding-bottom: 90px;
+}
+
+.c-simple-folder {
+  min-height: 260px;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 42px 56px !important;
+  border: 1px solid rgba(210, 225, 255, 0.16);
+  background:
+    radial-gradient(circle at 74% 22%, rgba(120, 160, 255, 0.10), transparent 34%),
+    radial-gradient(circle at 18% 84%, rgba(70, 210, 170, 0.08), transparent 36%),
+    rgba(4, 8, 20, 0.46);
+  backdrop-filter: blur(15px);
+}
+
+.c-simple-folder::before,
+.c-simple-folder::after,
+.c-simple-folder .c-closed-folder-line,
+.c-simple-folder .c-closed-folder-meta,
+.c-simple-folder .c-closed-folder-body,
+.c-simple-folder .c-folder-open,
+.c-simple-folder .c-closed-folder-copy,
+.c-simple-folder .c-closed-folder-strip {
+  display: none !important;
+  content: none !important;
+}
+
+.c-simple-folder-title {
+  position: relative;
+  z-index: 2;
+  color: #f5f8ff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(64px, 8vw, 118px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: -0.075em;
+}
+
+.c-simple-folder-icon {
+  position: relative;
+  z-index: 2;
+  flex: 0 0 clamp(150px, 18vw, 260px);
+  width: clamp(150px, 18vw, 260px);
+  height: clamp(96px, 11vw, 160px);
+  border-radius: 18px;
+  border: 1px solid rgba(210, 225, 255, 0.18);
+  background:
+    linear-gradient(180deg, rgba(165, 198, 255, 0.15), rgba(86, 120, 180, 0.08)),
+    rgba(8, 16, 34, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 22px 70px rgba(0,0,0,0.24);
+  opacity: 0.78;
+}
+
+.c-simple-folder-icon::before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: 24px;
+  width: 42%;
+  height: 26px;
+  border-radius: 14px 14px 0 0;
+  border: 1px solid rgba(210, 225, 255, 0.18);
+  border-bottom: 0;
+  background: rgba(8, 16, 34, 0.72);
+}
+
+.c-simple-folder:hover {
+  transform: translateY(-3px);
+  border-color: rgba(230, 238, 255, 0.28);
+  background:
+    radial-gradient(circle at 74% 22%, rgba(120, 160, 255, 0.14), transparent 34%),
+    radial-gradient(circle at 18% 84%, rgba(70, 210, 170, 0.10), transparent 36%),
+    rgba(6, 12, 28, 0.62);
+}
+
+@media (max-width: 768px) {
+  .c-work-minimal-folder {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .c-simple-folder {
+    min-height: 190px;
+    padding: 28px 22px !important;
+    gap: 18px;
+  }
+
+  .c-simple-folder-title {
+    font-size: clamp(44px, 14vw, 70px);
+  }
+
+  .c-simple-folder-icon {
+    flex-basis: 118px;
+    width: 118px;
+    height: 76px;
+    border-radius: 14px;
+  }
+
+  .c-simple-folder-icon::before {
+    top: -17px;
+    left: 16px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 430px) {
+  .c-simple-folder {
+    min-height: 172px;
+    padding: 24px 18px !important;
+  }
+
+  .c-simple-folder-icon {
+    flex-basis: 92px;
+    width: 92px;
+    height: 62px;
+    opacity: 0.62;
+  }
+}
+/* ============================================================
+   FINAL MINIMAL ARCHIVE FOLDER — no big rectangle
+   ============================================================ */
+
+.c-work {
+  min-height: 62vh;
+  padding-top: 120px;
+  padding-bottom: 90px;
+}
+
+.c-work-head {
+  display: none !important;
+}
+
+.c-folder-card {
+  width: fit-content !important;
+  min-width: 260px;
+  max-width: none;
+  margin-left: 0;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  text-align: left;
+  cursor: pointer;
+}
+
+.c-folder-card:hover {
+  transform: translateY(-3px);
+  border: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.c-folder-card-inner {
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.c-folder-tab,
+.c-folder-meta-top,
+.c-folder-meta-bottom {
+  display: none !important;
+}
+
+.c-folder-main {
+  min-height: 0 !important;
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.c-folder-icon-wrap {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  display: block;
+}
+
+.c-folder-icon {
+  position: relative;
+  width: 150px;
+  height: 96px;
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(165, 198, 255, 0.14), rgba(70, 95, 145, 0.10)),
+    rgba(10, 17, 36, 0.88);
+  border: 1px solid rgba(210, 225, 255, 0.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 20px 54px rgba(0, 0, 0, 0.24);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease;
+}
+
+.c-folder-icon::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 18px;
+  width: 62px;
+  height: 22px;
+  border-radius: 10px 10px 0 0;
+  background:
+    linear-gradient(180deg, rgba(165, 198, 255, 0.12), rgba(70, 95, 145, 0.08)),
+    rgba(10, 17, 36, 0.9);
+  border: 1px solid rgba(210, 225, 255, 0.16);
+  border-bottom: 0;
+}
+
+.c-folder-icon-tab {
+  display: none !important;
+}
+
+.c-folder-card:hover .c-folder-icon {
+  transform: translateY(-2px);
+  border-color: rgba(230, 238, 255, 0.32);
+  background:
+    linear-gradient(180deg, rgba(165, 198, 255, 0.18), rgba(70, 95, 145, 0.13)),
+    rgba(12, 20, 42, 0.94);
+}
+
+.c-folder-copy h3 {
+  margin: 0 !important;
+  color: #f5f8ff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(58px, 7vw, 96px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+}
+
+.c-folder-copy p {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .c-work {
+    min-height: 52vh;
+    padding-top: 90px;
+    padding-bottom: 70px;
+  }
+
+  .c-folder-card {
+    min-width: 200px;
+  }
+
+  .c-folder-copy h3 {
+    font-size: clamp(44px, 14vw, 64px);
+  }
+
+  .c-folder-icon {
+    width: 128px;
+    height: 82px;
+  }
+
+  .c-folder-icon::before {
+    width: 54px;
+    height: 18px;
+    top: -12px;
+  }
+}
+
+
+/* ============================================================
+   FINAL BALANCED HOMEPAGE LAYOUT — less empty space + left/right rhythm
+   ============================================================ */
+.c-section{padding-left:clamp(28px,5vw,64px);padding-right:clamp(28px,5vw,64px)}
+.c-hero{min-height:74dvh!important;padding-top:132px!important;padding-bottom:70px!important}
+.c-systems,.c-work,.c-contact{min-height:54dvh!important;padding-top:72px!important;padding-bottom:72px!important}
+.c-section-side{display:flex;flex-direction:column}.c-align-left{align-items:flex-start;text-align:left}.c-align-right{align-items:flex-end;text-align:left}.c-align-right>*,.c-align-left>*{width:min(760px,100%)}
+.c-systems .c-section-head,.c-systems .c-service-list,.c-systems .c-panel{width:min(760px,100%)}.c-systems .c-section-head{margin-bottom:34px}.c-service{padding:22px 0!important}.c-panel{margin-top:26px!important}
+.c-work-minimal-folder{justify-content:center;min-height:34dvh!important}.c-work-minimal-folder.c-align-left{align-items:flex-start}
+.c-simple-folder{width:fit-content!important;min-height:0!important;display:inline-flex!important;align-items:center!important;justify-content:flex-start!important;gap:22px!important;padding:0!important;border:0!important;background:transparent!important;backdrop-filter:none!important;box-shadow:none!important;transform:none}
+.c-simple-folder:hover{transform:translateY(-3px)!important;border:0!important;background:transparent!important;box-shadow:none!important}
+.c-simple-folder-title{margin:0!important;color:#f5f8ff;font-family:Georgia,"Times New Roman",serif;font-size:clamp(52px,6vw,86px)!important;font-style:italic;font-weight:400;line-height:.9;letter-spacing:-.06em}
+.c-simple-folder-icon{position:relative!important;flex:0 0 auto!important;width:104px!important;height:68px!important;border-radius:12px!important;border:1px solid rgba(210,225,255,.18)!important;background:linear-gradient(180deg,rgba(165,198,255,.14),rgba(70,95,145,.10)),rgba(10,17,36,.84)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 14px 38px rgba(0,0,0,.20)!important;opacity:.82}
+.c-simple-folder-icon::before{content:"";position:absolute;top:-13px;left:16px;width:48px;height:18px;border-radius:9px 9px 0 0;border:1px solid rgba(210,225,255,.16);border-bottom:0;background:rgba(10,17,36,.88)}
+.c-simple-folder:hover .c-simple-folder-icon{border-color:rgba(230,238,255,.32)!important;opacity:1}.c-contact{justify-content:center}.c-contact>*{width:min(760px,100%)}.c-contact .c-email{width:fit-content}
+@media(max-width:768px){.c-hero{min-height:62svh!important;padding-top:calc(84px + env(safe-area-inset-top))!important;padding-bottom:44px!important}.c-systems,.c-work,.c-contact{min-height:auto!important;padding-top:48px!important;padding-bottom:48px!important;align-items:flex-start!important}.c-align-right>*,.c-align-left>*{width:100%}.c-simple-folder{gap:16px!important}.c-simple-folder-title{font-size:clamp(42px,13vw,62px)!important}.c-simple-folder-icon{width:78px!important;height:52px!important}.c-simple-folder-icon::before{top:-10px;left:12px;width:38px;height:14px}}
+/* Hide oversized hero brand, keep only subtle top-left brand */
+.c-hero {
+  min-height: 46vh !important;
+  padding-top: 120px !important;
+  padding-bottom: 40px !important;
+}
+
+.c-hero .c-kicker,
+.c-hero h1,
+.c-hero .c-hero-copy {
+  display: none !important;
+}
+
+.c-hero-inner {
+  min-height: 220px;
+}
+/* Minimal hero — no huge CHANTER title */
+.c-hero {
+  min-height: 42vh !important;
+  padding-top: 120px !important;
+  padding-bottom: 35px !important;
+}
+
+.c-hero h1 {
+  display: none !important;
+}
+
+.c-hero .c-kicker {
+  display: block !important;
+  margin: 0;
+  max-width: 620px;
+  color: rgba(190, 205, 235, 0.72);
+  font-size: 12px;
+  line-height: 1.6;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.c-hero .c-hero-copy {
+  display: none !important;
+}
+
+.c-hero-inner {
+  min-height: 180px;
+}

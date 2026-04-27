@@ -1,150 +1,39 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import ParticleArchiveScene from "./components/ParticleArchiveScene";
+import LoginButton from "./components/LoginButton";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Home from "./pages/Home";
+import CreatureFolder from "./pages/CreatureFolder";
 import "./styles/app.css";
 
-const services = [
-  {
-    title: "AI Direction",
-    text: "Cinematic direction for AI visuals, scenes, campaigns, and creative systems.",
-  },
-  {
-    title: "Creature Design",
-    text: "Original characters, alien creatures, dark fantasy forms, and visual identity tests.",
-  },
-  {
-    title: "Visual Systems",
-    text: "Worldbuilding, design language, UI mood, prompts, motion logic, and visual consistency.",
-  },
-  {
-    title: "Experimental Film",
-    text: "Short cinematic prototypes, image-to-video scenes, music-driven edits, and atmosphere tests.",
-  },
-  {
-    title: "Generative Design",
-    text: "AI-assisted creative workflows, brand visuals, web experiments, and creator tools.",
-  },
-];
-
-const workItems = Array.from({ length: 13 }, (_, index) => {
-  const num = String(index + 1).padStart(2, "0");
-
-  return {
-    title: `Creature ${num}`,
-    tag:
-      index === 0
-        ? "Prototype"
-        : index === 1
-        ? "Motion Test"
-        : index === 2
-        ? "Creature Study"
-        : "Visual System",
-    videoSrc: `/media/creature/creature_${num}.mp4`,
-  };
-});
-
 export default function App() {
-  const [activeService, setActiveService] = useState(0);
-  const [activeVideo, setActiveVideo] = useState(null);
-  const [mobileArchiveOpen, setMobileArchiveOpen] = useState(false);
-  const lightboxVideoRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.hash) return;
+
+    const id = location.hash.replace("#", "");
+    const timeoutId = window.setTimeout(() => {
+      const target = document.getElementById(id);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 60);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [location.pathname, location.hash]);
 
   const scrollTo = (id) => {
+    if (location.pathname !== "/") {
+      navigate(`/#${id}`);
+      return;
+    }
+
     const target = document.getElementById(id);
     if (!target) return;
     target.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-
-  useEffect(() => {
-    if (activeVideo === null || !lightboxVideoRef.current) return;
-
-    const video = lightboxVideoRef.current;
-    video.muted = false;
-    video.volume = 1;
-
-    const playPromise = video.play();
-    if (playPromise && typeof playPromise.catch === "function") {
-      playPromise.catch(() => {
-        // leave controls visible if browser blocks autoplay with sound
-      });
-    }
-  }, [activeVideo]);
-
-  useEffect(() => {
-    const onKeyDown = (event) => {
-      if (event.key === "Escape") {
-        if (activeVideo !== null) {
-          setActiveVideo(null);
-          return;
-        }
-
-        if (mobileArchiveOpen) {
-          setMobileArchiveOpen(false);
-        }
-      }
-
-      if (activeVideo !== null && event.key === "ArrowLeft") {
-        goPrevVideo();
-      }
-
-      if (activeVideo !== null && event.key === "ArrowRight") {
-        goNextVideo();
-      }
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [activeVideo, mobileArchiveOpen]);
-
-  useEffect(() => {
-    document.body.style.overflow = mobileArchiveOpen ? "hidden" : "";
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [mobileArchiveOpen]);
-
-  const openVideo = (index) => setActiveVideo(index);
-  const closeVideo = () => setActiveVideo(null);
-
-  const goPrevVideo = () => {
-    setActiveVideo((current) =>
-      current === null ? 0 : (current - 1 + workItems.length) % workItems.length
-    );
-  };
-
-  const goNextVideo = () => {
-    setActiveVideo((current) =>
-      current === null ? 0 : (current + 1) % workItems.length
-    );
-  };
-
-  const renderWorkCard = (item, index) => (
-    <article className="c-card" key={item.videoSrc}>
-      <button
-        className="c-card-media"
-        type="button"
-        onClick={() => openVideo(index)}
-        aria-label={`Open ${item.title}`}
-      >
-        <video
-          src={item.videoSrc}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-        />
-        <span className="c-card-num">{String(index + 1).padStart(3, "0")}</span>
-        <span className="c-card-open">OPEN</span>
-      </button>
-
-      <div className="c-card-info">
-        <h3>{item.title}</h3>
-        <p>{item.tag}</p>
-      </div>
-    </article>
-  );
 
   return (
     <main className="c-site">
@@ -169,188 +58,21 @@ export default function App() {
           <button type="button" onClick={() => scrollTo("contact")}>
             CONTACT
           </button>
+          <LoginButton compact />
         </nav>
       </header>
 
-      <section id="home" className="c-section c-hero">
-        <div className="c-hero-inner">
-          <p className="c-kicker">AI DIRECTION / WORLDBUILDING / VISUAL SYSTEMS</p>
-          <h1>CHANTER</h1>
-          <p className="c-hero-copy">
-            Cinematic AI direction, creature design, and visual systems for the next wave of digital worlds.
-          </p>
-        </div>
-
-        <div className="c-hero-illusion" aria-hidden="true">
-          <div className="c-light-beam beam-a" />
-          <div className="c-light-beam beam-b" />
-          <div className="c-light-beam beam-c" />
-
-          <div className="c-glass-core">
-            <span className="c-crack c-crack-1" />
-            <span className="c-crack c-crack-2" />
-            <span className="c-crack c-crack-3" />
-            <span className="c-crack c-crack-4" />
-            <span className="c-crack c-crack-5" />
-
-            <span className="c-shard shard-1" />
-            <span className="c-shard shard-2" />
-            <span className="c-shard shard-3" />
-            <span className="c-shard shard-4" />
-          </div>
-        </div>
-      </section>
-
-      <section id="systems" className="c-section c-systems">
-        <div className="c-section-head">
-          <p className="c-kicker">SYSTEMS</p>
-          <h2>What we build</h2>
-        </div>
-
-        <div className="c-service-list">
-          {services.map((item, index) => (
-            <button
-              key={item.title}
-              type="button"
-              className={`c-service ${activeService === index ? "is-active" : ""}`}
-              onClick={() => setActiveService(index)}
-            >
-              <span className="c-service-num">{String(index + 1).padStart(2, "0")}</span>
-              <span className="c-service-title">{item.title}</span>
-              <span className="c-service-icon">{activeService === index ? "−" : "+"}</span>
-            </button>
-          ))}
-        </div>
-
-        <div className="c-panel">
-          <p className="c-panel-label">SERVICE WINDOW</p>
-          <h3>{services[activeService].title}</h3>
-          <p>{services[activeService].text}</p>
-        </div>
-      </section>
-
-      <section id="work" className="c-section c-work">
-        <div className="c-section-head c-work-head">
-          <p className="c-kicker">CREATURE FILE</p>
-          <h2>Archive</h2>
-          <p className="c-muted">Compact visual tests.</p>
-        </div>
-
-        <button
-          className="c-mobile-folder"
-          type="button"
-          onClick={() => setMobileArchiveOpen(true)}
-          aria-label="Open creature archive"
-        >
-          <span className="c-mobile-folder-label">CREATURE / MEDIA FILE</span>
-          <span className="c-mobile-folder-count">{workItems.length} ITEMS</span>
-          <span className="c-mobile-folder-title">Visual archive</span>
-          <span className="c-mobile-folder-sub">Open folder →</span>
-        </button>
-
-        <div className="c-archive c-desktop-archive">
-          <div className="c-archive-top">
-            <span>CREATURE / MEDIA FILE</span>
-            <span>{workItems.length} ITEMS</span>
-          </div>
-
-          <div className="c-archive-grid">
-            {workItems.map((item, index) => renderWorkCard(item, index))}
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" className="c-section c-contact">
-        <p className="c-kicker">CONTACT</p>
-        <h2>Begin a world.</h2>
-
-        <p className="c-muted">
-          Available for select commissions, collaborations, and long-form creative systems.
-        </p>
-
-        <a className="c-email" href="mailto:cchanter1@gmail.com">
-          cchanter1@gmail.com
-        </a>
-
-        <div className="c-socials">
-          <a href="https://www.instagram.com/___chanter/" target="_blank" rel="noreferrer">
-            Instagram
-          </a>
-          <a href="https://www.tiktok.com/@__chanter" target="_blank" rel="noreferrer">
-            TikTok
-          </a>
-        </div>
-      </section>
-
-      {mobileArchiveOpen && (
-        <section className="c-mobile-archive-page" aria-label="Creature archive folder">
-          <div className="c-mobile-archive-top">
-            <button type="button" onClick={() => setMobileArchiveOpen(false)}>
-              ← BACK
-            </button>
-
-            <div>
-              <p>CREATURE / MEDIA FILE</p>
-              <h2>Archive</h2>
-            </div>
-
-            <span>{workItems.length} ITEMS</span>
-          </div>
-
-          <div className="c-mobile-archive-grid">
-            {workItems.map((item, index) => renderWorkCard(item, index))}
-          </div>
-        </section>
-      )}
-
-      {activeVideo !== null && (
-        <div className="c-lightbox" role="dialog" aria-modal="true" aria-label="Video preview">
-          <button
-            className="c-lightbox-backdrop"
-            type="button"
-            onClick={closeVideo}
-            aria-label="Close video"
-          />
-
-          <div className="c-lightbox-window">
-            <div className="c-lightbox-top">
-              <div>
-                <p>{workItems[activeVideo].tag}</p>
-                <h3>{workItems[activeVideo].title}</h3>
-              </div>
-
-              <button className="c-lightbox-close" type="button" onClick={closeVideo}>
-                CLOSE
-              </button>
-            </div>
-
-            <div className="c-lightbox-media">
-              <video
-                ref={lightboxVideoRef}
-                key={workItems[activeVideo].videoSrc}
-                src={workItems[activeVideo].videoSrc}
-                autoPlay
-                loop
-                playsInline
-                controls
-              />
-            </div>
-
-            <div className="c-lightbox-controls">
-              <button type="button" onClick={goPrevVideo}>
-                ← PREV
-              </button>
-              <span>
-                {String(activeVideo + 1).padStart(2, "0")} /{" "}
-                {String(workItems.length).padStart(2, "0")}
-              </span>
-              <button type="button" onClick={goNextVideo}>
-                NEXT →
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/creatures"
+          element={
+            <ProtectedRoute>
+              <CreatureFolder />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
     </main>
   );
 }
