@@ -6,7 +6,7 @@ import AuthModal from "../components/AuthModal";
 import AtmosphereSphere from "../components/AtmosphereSphere";
 
 export default function Home() {
-  const [activeService, setActiveService] = useState(0);
+  const [hoveredService, setHoveredService] = useState(null);
   const [authOpen, setAuthOpen] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -60,22 +60,32 @@ export default function Home() {
         </div>
 
         <div className="c-systems-layout">
-          <div className="c-system-detail" key={services[activeService].title}>
-            <p className="c-system-detail-label">ACTIVE SYSTEM</p>
-            <h3 className="c-system-detail-title">{services[activeService].title}</h3>
-            <p className="c-system-detail-copy">{services[activeService].text}</p>
+          <div
+            className={`c-system-detail c-system-detail-meaning ${hoveredService !== null ? "is-visible" : ""}`}
+            aria-hidden={hoveredService === null}
+          >
+            {hoveredService !== null && (
+              <p className="c-system-detail-copy" key={services[hoveredService].title}>
+                {services[hoveredService].text}
+              </p>
+            )}
           </div>
 
-          <div className="c-service-list" aria-label="Systems list">
+          <div
+            className="c-service-list"
+            aria-label="Systems list"
+            onMouseLeave={() => setHoveredService(null)}
+          >
             {services.map((item, index) => (
               <button
                 key={item.title}
                 type="button"
-                className={`c-service ${activeService === index ? "is-active" : ""}`}
-                onMouseEnter={() => setActiveService(index)}
-                onFocus={() => setActiveService(index)}
-                onClick={() => setActiveService(index)}
-                aria-pressed={activeService === index}
+                className={`c-service ${hoveredService === index ? "is-active" : ""}`}
+                onMouseEnter={() => setHoveredService(index)}
+                onFocus={() => setHoveredService(index)}
+                onBlur={() => setHoveredService(null)}
+                onClick={() => setHoveredService(index)}
+                aria-pressed={hoveredService === index}
               >
                 <span className="c-service-num">{String(index + 1).padStart(2, "0")}</span>
                 <span className="c-service-title">{item.title}</span>
