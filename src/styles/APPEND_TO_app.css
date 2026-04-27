@@ -1,0 +1,379 @@
+/* ============================================================
+   SPHERICAL PREMIUM PASS — systems detail opens left with fade
+   Append at the VERY END of src/styles/app.css
+   ============================================================ */
+
+:root {
+  --c-glass-line: rgba(210, 225, 255, 0.14);
+  --c-glass-line-strong: rgba(230, 238, 255, 0.28);
+  --c-soft-text: rgba(222, 230, 250, 0.74);
+  --c-faint-text: rgba(190, 205, 235, 0.58);
+}
+
+/* More spherical / premium atmosphere */
+.c-bg {
+  background:
+    radial-gradient(circle at 72% 38%, rgba(112, 150, 230, 0.18), transparent 25%),
+    radial-gradient(circle at 70% 40%, rgba(180, 215, 255, 0.075), transparent 16%),
+    radial-gradient(circle at 18% 82%, rgba(52, 120, 110, 0.15), transparent 34%),
+    radial-gradient(circle at 74% 20%, rgba(92, 116, 190, 0.13), transparent 40%),
+    linear-gradient(180deg, #050817 0%, #02040d 100%) !important;
+}
+
+.c-bg::after {
+  content: "";
+  position: absolute;
+  top: 14vh;
+  right: 12vw;
+  width: min(42vw, 680px);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 42% 34%, rgba(255, 255, 255, 0.12), transparent 6%),
+    radial-gradient(circle at 50% 50%, rgba(130, 172, 255, 0.14), transparent 42%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05), transparent 60%);
+  border: 1px solid rgba(190, 220, 255, 0.10);
+  box-shadow:
+    inset 0 0 80px rgba(160, 200, 255, 0.045),
+    0 0 110px rgba(80, 130, 220, 0.055);
+  opacity: 0.34;
+  filter: blur(0.2px);
+}
+
+.particleArchiveScene {
+  opacity: 0.40 !important;
+  filter: saturate(0.90) brightness(0.88);
+}
+
+.c-grid-bg {
+  opacity: 0.14 !important;
+}
+
+.c-hero-illusion {
+  opacity: 0.56 !important;
+  filter: saturate(0.95) brightness(0.93);
+}
+
+.c-glass-core {
+  border-radius: 999px !important;
+  background:
+    radial-gradient(circle at 46% 35%, rgba(255,255,255,0.22), transparent 5%),
+    radial-gradient(circle at 70% 24%, rgba(210,235,255,0.10), transparent 18%),
+    radial-gradient(circle at 52% 52%, rgba(145,180,255,0.075), transparent 56%),
+    linear-gradient(135deg, rgba(255,255,255,0.09), rgba(90,140,210,0.035) 55%, rgba(255,255,255,0.055)) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.16),
+    inset 0 0 80px rgba(180,215,255,0.055),
+    inset 0 0 160px rgba(80,130,220,0.055),
+    0 0 95px rgba(95,145,235,0.075) !important;
+}
+
+.c-shard {
+  opacity: 0.22 !important;
+}
+
+.c-light-beam {
+  opacity: 0.40;
+}
+
+/* Global section rhythm: less random empty space, more premium framing */
+.c-section-side {
+  min-height: 76vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.c-align-left {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.c-align-right {
+  align-items: flex-end;
+  text-align: left;
+}
+
+.c-align-left > *,
+.c-align-right > * {
+  width: min(760px, 100%);
+}
+
+/* Systems: detail opens/fades on the LEFT, list stays on the RIGHT */
+.c-systems {
+  min-height: 94vh !important;
+  align-items: stretch !important;
+  justify-content: center !important;
+  padding-top: 72px !important;
+  padding-bottom: 86px !important;
+}
+
+.c-systems-shell {
+  width: 100% !important;
+  max-width: 1580px;
+  min-height: 620px;
+  display: grid;
+  grid-template-columns: minmax(320px, 0.82fr) minmax(520px, 1.18fr);
+  align-items: center;
+  gap: clamp(56px, 9vw, 170px);
+  margin: 0 auto;
+}
+
+.c-systems-stack {
+  width: min(680px, 100%);
+  margin-left: auto;
+}
+
+.c-systems .c-section-head {
+  width: 100% !important;
+  margin: 0 0 36px !important;
+}
+
+.c-systems .c-section-head h2 {
+  margin-bottom: 0;
+}
+
+.c-service-list {
+  width: 100% !important;
+  border-top: 0 !important;
+}
+
+.c-service {
+  position: relative;
+  grid-template-columns: 64px minmax(0, 1fr) 34px !important;
+  padding: 18px 0 20px !important;
+  border-bottom: 0 !important;
+  opacity: 0.72;
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease,
+    color 220ms ease;
+}
+
+.c-service::before {
+  content: "";
+  position: absolute;
+  left: 64px;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(230,238,255,0.12), rgba(230,238,255,0.025), transparent);
+  transform-origin: right center;
+  transform: scaleX(0.82);
+  opacity: 0.7;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.c-service::after {
+  content: "";
+  position: absolute;
+  left: 58px;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(210, 225, 255, 0.0);
+  box-shadow: 0 0 0 rgba(130, 175, 255, 0);
+  translate: 0 -50%;
+  transition: background 220ms ease, box-shadow 220ms ease;
+}
+
+.c-service:hover,
+.c-service.is-active {
+  opacity: 1;
+  transform: translateX(-8px);
+}
+
+.c-service:hover::before,
+.c-service.is-active::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.c-service.is-active::after {
+  background: rgba(230, 238, 255, 0.72);
+  box-shadow: 0 0 22px rgba(130, 175, 255, 0.32);
+}
+
+.c-service-num {
+  font-size: 12px !important;
+  color: rgba(190, 205, 235, 0.42) !important;
+}
+
+.c-service-title {
+  font-size: clamp(42px, 4.7vw, 76px) !important;
+  line-height: 0.95 !important;
+  letter-spacing: -0.07em !important;
+}
+
+.c-service-icon {
+  font-size: 26px !important;
+  opacity: 0.74;
+}
+
+.c-service.is-active .c-service-icon {
+  opacity: 1;
+}
+
+/* Left detail: no box, no border. Just premium fade copy. */
+.c-systems-detail {
+  width: min(460px, 100%) !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 0 0 2px !important;
+  border: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  animation: serviceFadeLeft 420ms cubic-bezier(.22,.75,.18,1) both;
+}
+
+.c-systems-detail::before {
+  content: "";
+  display: block;
+  width: 110px;
+  height: 1px;
+  margin-bottom: 24px;
+  background: linear-gradient(90deg, rgba(230,238,255,0.32), transparent);
+}
+
+.c-systems-detail .c-panel-label {
+  margin: 0 0 20px !important;
+  color: rgba(190, 205, 235, 0.50) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.30em !important;
+}
+
+.c-systems-detail h3 {
+  margin: 0 0 18px !important;
+  color: #f5f8ff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(42px, 5vw, 72px) !important;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+}
+
+.c-systems-detail p:last-child {
+  max-width: 42ch;
+  color: rgba(222, 230, 250, 0.68) !important;
+  font-size: 15px !important;
+  line-height: 1.78 !important;
+}
+
+@keyframes serviceFadeLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-22px, 8px, 0);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+/* Archive + Contact keep the left/right composition but feel less flat */
+.c-work-minimal-folder {
+  min-height: 58vh !important;
+  padding-top: 42px !important;
+  padding-bottom: 42px !important;
+}
+
+.c-simple-folder-title {
+  text-shadow: 0 0 42px rgba(170, 200, 255, 0.08);
+}
+
+.c-simple-folder-icon {
+  border-radius: 18px !important;
+  background:
+    radial-gradient(circle at 36% 28%, rgba(255,255,255,0.10), transparent 18%),
+    linear-gradient(180deg, rgba(165,198,255,0.16), rgba(70,95,145,0.10)),
+    rgba(10,17,36,0.86) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    inset 0 0 30px rgba(120,165,255,0.045),
+    0 18px 52px rgba(0,0,0,0.24) !important;
+}
+
+.c-contact {
+  min-height: 80vh !important;
+  padding-top: 70px !important;
+  padding-bottom: 116px !important;
+}
+
+.c-contact .c-email {
+  text-shadow: 0 0 34px rgba(170, 200, 255, 0.06);
+}
+
+/* Mobile keeps the old clarity, but panel becomes fade text below list */
+@media (max-width: 900px) {
+  .c-systems {
+    min-height: auto !important;
+    align-items: flex-start !important;
+    padding-top: 58px !important;
+    padding-bottom: 64px !important;
+  }
+
+  .c-systems-shell {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 26px;
+  }
+
+  .c-systems-stack {
+    order: 1;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .c-systems-detail {
+    order: 2;
+    width: 100% !important;
+    padding-top: 6px !important;
+  }
+
+  .c-systems-detail h3 {
+    font-size: clamp(34px, 11vw, 52px) !important;
+  }
+
+  .c-systems-detail p:last-child {
+    font-size: 13px !important;
+    line-height: 1.65 !important;
+  }
+
+  .c-service {
+    grid-template-columns: 42px minmax(0, 1fr) 24px !important;
+    padding: 13px 0 15px !important;
+    transform: none !important;
+  }
+
+  .c-service::before {
+    left: 42px;
+  }
+
+  .c-service::after {
+    left: 36px;
+  }
+
+  .c-service-title {
+    font-size: clamp(27px, 8.8vw, 42px) !important;
+    letter-spacing: -0.055em !important;
+  }
+
+  .c-bg::after {
+    top: 22vh;
+    right: -24vw;
+    width: 92vw;
+    opacity: 0.18;
+  }
+
+  .particleArchiveScene {
+    opacity: 0.28 !important;
+  }
+}

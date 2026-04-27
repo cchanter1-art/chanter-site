@@ -1,0 +1,80 @@
+
+/* ============================================================
+   STEP 1 — premium 3D background depth polish
+   Append this to the END of src/styles/app.css
+   ============================================================ */
+
+.particleArchiveScene {
+  opacity: 0.74 !important;
+  mix-blend-mode: screen;
+  filter: saturate(1.08) contrast(1.04);
+  mask-image:
+    radial-gradient(circle at 66% 44%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 34%, rgba(0,0,0,0.58) 62%, rgba(0,0,0,0.16) 100%);
+  -webkit-mask-image:
+    radial-gradient(circle at 66% 44%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 34%, rgba(0,0,0,0.58) 62%, rgba(0,0,0,0.16) 100%);
+}
+
+.c-bg {
+  background:
+    radial-gradient(circle at 72% 30%, rgba(120, 160, 255, 0.17), transparent 30%),
+    radial-gradient(circle at 74% 62%, rgba(92, 255, 196, 0.12), transparent 34%),
+    radial-gradient(circle at 18% 82%, rgba(52, 120, 110, 0.16), transparent 34%),
+    linear-gradient(180deg, #050817 0%, #02040d 100%) !important;
+}
+
+.c-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(3, 6, 17, 0.72) 0%, rgba(3, 6, 17, 0.18) 46%, rgba(3, 6, 17, 0.48) 100%),
+    radial-gradient(ellipse at 74% 48%, rgba(210, 245, 255, 0.055), transparent 42%);
+}
+
+.c-grid-bg {
+  opacity: 0.16 !important;
+  background-size: 132px 132px !important;
+  transform: perspective(900px) rotateX(58deg) translateY(-18vh) scale(1.18);
+  transform-origin: center top;
+}
+
+.c-hero-illusion {
+  opacity: 0.55 !important;
+  right: 8vw !important;
+  top: 12vh !important;
+  filter: saturate(1.12);
+}
+
+.c-glass-core {
+  opacity: 0.72;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 0 52px rgba(200, 230, 255, 0.06),
+    inset 0 0 120px rgba(80, 130, 220, 0.06),
+    0 0 80px rgba(90, 190, 255, 0.10),
+    0 0 180px rgba(50, 160, 210, 0.07) !important;
+}
+
+.c-section {
+  isolation: isolate;
+}
+
+@media (max-width: 768px) {
+  .particleArchiveScene {
+    opacity: 0.46 !important;
+    mask-image: radial-gradient(circle at 64% 42%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.74) 48%, rgba(0,0,0,0.14) 100%);
+    -webkit-mask-image: radial-gradient(circle at 64% 42%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.74) 48%, rgba(0,0,0,0.14) 100%);
+  }
+
+  .c-grid-bg {
+    opacity: 0.10 !important;
+    transform: none;
+  }
+
+  .c-hero-illusion {
+    opacity: 0.22 !important;
+    right: -24vw !important;
+    top: 34vh !important;
+  }
+}

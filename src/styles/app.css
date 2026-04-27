@@ -2764,3 +2764,132 @@ h2 {
 .c-hero-inner {
   min-height: 180px;
 }
+/* ============================================================
+   PREMIUM SPHERICAL PASS — Three.js atmosphere + left-fade Systems
+   ============================================================ */
+.c-atmosphere-sphere{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden;opacity:.42;mix-blend-mode:screen;filter:saturate(.96) contrast(1.02)}
+.c-atmosphere-sphere canvas{width:100%!important;height:100%!important;display:block}.c-bg{z-index:0}.particleArchiveScene{z-index:1}.c-grid-bg{z-index:2;opacity:.16}.c-hero-illusion{z-index:3;opacity:.34}.c-section{position:relative;z-index:5}.c-nav{position:relative;z-index:20}.c-systems.c-align-right{align-items:stretch!important}.c-systems .c-section-head{width:min(1180px,100%)!important;align-self:center;margin-bottom:clamp(34px,5vw,72px)!important}
+.c-systems-layout{position:relative;width:min(1180px,100%)!important;align-self:center;display:grid;grid-template-columns:minmax(280px,.86fr) minmax(420px,1.14fr);gap:clamp(42px,7vw,118px);align-items:center}.c-systems-layout::before{content:"";position:absolute;inset:-18% -8%;z-index:-1;pointer-events:none;background:radial-gradient(circle at 20% 46%,rgba(110,150,255,.12),transparent 34%),radial-gradient(circle at 76% 50%,rgba(72,220,190,.065),transparent 36%);filter:blur(22px);opacity:.88}
+.c-system-detail{position:relative;min-height:330px;display:flex;flex-direction:column;justify-content:center;padding:clamp(20px,4vw,54px) 0 clamp(20px,4vw,54px) clamp(22px,3vw,46px);animation:systemDetailFade 420ms cubic-bezier(.22,1,.36,1) both}.c-system-detail::before{content:"";position:absolute;top:8%;bottom:8%;left:0;width:1px;background:linear-gradient(180deg,transparent,rgba(210,235,255,.32),rgba(80,220,198,.22),transparent);box-shadow:0 0 20px rgba(125,190,255,.18),0 0 54px rgba(80,220,198,.09)}.c-system-detail::after{content:"";position:absolute;inset:-14% -28% -14% -8%;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(130,170,255,.105),rgba(80,220,198,.035),transparent 72%),radial-gradient(circle at 28% 50%,rgba(230,240,255,.08),transparent 38%);filter:blur(26px);opacity:.88;mask-image:linear-gradient(90deg,#000 0%,#000 52%,transparent 100%)}
+.c-system-detail-label{margin:0 0 24px;color:rgba(190,205,235,.62);font-size:10px;font-weight:800;letter-spacing:.32em;text-transform:uppercase}.c-system-detail-title{max-width:10ch;margin:0 0 22px;color:#f6f8ff;font-family:Georgia,"Times New Roman",serif;font-size:clamp(48px,7vw,104px);font-style:italic;font-weight:400;line-height:.9;letter-spacing:-.07em;text-wrap:balance}.c-system-detail-copy{max-width:440px;margin:0;color:rgba(222,230,250,.74);font-size:clamp(15px,1.35vw,18px);line-height:1.72}
+.c-systems-layout .c-service-list{width:100%!important;border-top:1px solid rgba(230,238,255,.075)!important}.c-systems-layout .c-service{position:relative;grid-template-columns:66px minmax(0,1fr) 34px!important;gap:18px!important;padding:clamp(20px,3vw,34px) 0!important;border-bottom:1px solid rgba(230,238,255,.075)!important;transition:opacity 220ms ease,transform 220ms ease,border-color 220ms ease}.c-systems-layout .c-service::before{content:"";position:absolute;inset:12px -18px;z-index:-1;background:linear-gradient(90deg,transparent,rgba(160,195,255,.065),rgba(80,220,198,.035),transparent);opacity:0;transform:scaleX(.92);transition:opacity 220ms ease,transform 220ms ease}.c-systems-layout .c-service:hover,.c-systems-layout .c-service.is-active{transform:translateX(-8px)}.c-systems-layout .c-service:hover::before,.c-systems-layout .c-service.is-active::before{opacity:1;transform:scaleX(1)}
+.c-systems-layout .c-service-num{color:rgba(210,222,250,.38);transition:color 220ms ease,text-shadow 220ms ease}.c-systems-layout .c-service-title{font-size:clamp(30px,4.9vw,68px)!important;color:rgba(238,243,255,.76);transition:color 220ms ease,letter-spacing 220ms ease,text-shadow 220ms ease}.c-systems-layout .c-service-icon{color:rgba(220,232,255,.42);font-size:clamp(24px,3vw,38px)!important;transition:color 220ms ease,text-shadow 220ms ease,transform 220ms ease}.c-systems-layout .c-service.is-active .c-service-num,.c-systems-layout .c-service.is-active .c-service-icon{color:rgba(210,242,255,.86);text-shadow:0 0 22px rgba(110,205,255,.28)}.c-systems-layout .c-service.is-active .c-service-title,.c-systems-layout .c-service:hover .c-service-title{color:#fff;text-shadow:0 0 34px rgba(150,190,255,.10)}.c-systems-layout .c-service.is-active .c-service-icon{transform:rotate(180deg)}.c-systems .c-panel{display:none!important}
+@keyframes systemDetailFade{from{opacity:0;transform:translate3d(-18px,10px,0);filter:blur(8px)}to{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}}@media(prefers-reduced-motion:reduce){.c-system-detail{animation:none}.c-systems-layout .c-service,.c-systems-layout .c-service::before,.c-systems-layout .c-service-title,.c-systems-layout .c-service-icon,.c-systems-layout .c-service-num{transition:none}}
+@media(max-width:900px){.c-atmosphere-sphere{opacity:.24}.c-hero-illusion{opacity:.18}.c-systems .c-section-head{align-self:flex-start}.c-systems-layout{grid-template-columns:1fr;gap:18px;align-self:flex-start}.c-systems-layout::before{inset:-8% -18%;opacity:.62}.c-system-detail{min-height:0;order:-1;padding:18px 0 24px 22px}.c-system-detail::before{top:10%;bottom:10%}.c-system-detail::after{inset:-12% -10% -12% -8%;opacity:.58}.c-system-detail-label{margin-bottom:14px;font-size:8px;letter-spacing:.22em}.c-system-detail-title{max-width:100%;margin-bottom:12px;font-size:clamp(34px,11vw,58px);line-height:.94}.c-system-detail-copy{max-width:34ch;font-size:12px;line-height:1.55}.c-systems-layout .c-service-list{border-top-color:rgba(230,238,255,.085)!important}.c-systems-layout .c-service{grid-template-columns:38px minmax(0,1fr) 22px!important;gap:10px!important;padding:14px 0!important}.c-systems-layout .c-service:hover,.c-systems-layout .c-service.is-active{transform:none}.c-systems-layout .c-service-title{font-size:clamp(18px,6vw,32px)!important;letter-spacing:-.045em}.c-systems-layout .c-service-num{font-size:9px}.c-systems-layout .c-service-icon{font-size:18px!important}}
+
+/* ============================================================
+   NEXT PASS — hover-preview Systems, no plus/minus icon
+   ============================================================ */
+.c-systems-layout {
+  grid-template-columns: minmax(320px, 0.9fr) minmax(420px, 1.1fr);
+  gap: clamp(54px, 8vw, 132px);
+}
+
+.c-system-detail {
+  min-height: 300px;
+  opacity: 0.96;
+}
+
+.c-system-detail::before {
+  width: 1px;
+  opacity: 0.78;
+}
+
+.c-system-detail::after {
+  opacity: 0.68;
+  filter: blur(34px);
+}
+
+.c-system-detail-label {
+  color: rgba(190, 205, 235, 0.50);
+}
+
+.c-system-detail-title {
+  text-shadow: 0 0 44px rgba(120, 165, 255, 0.10);
+}
+
+.c-system-detail-copy {
+  color: rgba(222, 230, 250, 0.68);
+}
+
+.c-systems-layout .c-service {
+  grid-template-columns: 66px minmax(0, 1fr) 54px !important;
+  cursor: default;
+}
+
+.c-systems-layout .c-service-icon {
+  display: none !important;
+}
+
+.c-service-line {
+  justify-self: end;
+  width: 34px;
+  height: 1px;
+  display: block;
+  background: linear-gradient(90deg, transparent, rgba(220, 232, 255, 0.34));
+  opacity: 0.24;
+  transform: scaleX(0.45);
+  transform-origin: right center;
+  transition: opacity 240ms ease, transform 240ms ease, background 240ms ease;
+}
+
+.c-systems-layout .c-service:hover,
+.c-systems-layout .c-service.is-active {
+  transform: translateX(-4px);
+}
+
+.c-systems-layout .c-service:hover::before,
+.c-systems-layout .c-service.is-active::before {
+  opacity: 0.58;
+}
+
+.c-systems-layout .c-service:hover .c-service-line,
+.c-systems-layout .c-service.is-active .c-service-line {
+  opacity: 0.78;
+  transform: scaleX(1);
+  background: linear-gradient(90deg, transparent, rgba(190, 230, 255, 0.78));
+}
+
+.c-systems-layout .c-service-title {
+  color: rgba(238, 243, 255, 0.64);
+}
+
+.c-systems-layout .c-service:hover .c-service-title,
+.c-systems-layout .c-service.is-active .c-service-title {
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.c-systems-layout .c-service:hover .c-service-num,
+.c-systems-layout .c-service.is-active .c-service-num {
+  color: rgba(210, 242, 255, 0.72);
+  text-shadow: 0 0 18px rgba(110, 205, 255, 0.18);
+}
+
+@media (hover: none) {
+  .c-systems-layout .c-service {
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 900px) {
+  .c-systems-layout {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .c-systems-layout .c-service {
+    grid-template-columns: 38px minmax(0, 1fr) 30px !important;
+  }
+
+  .c-service-line {
+    width: 22px;
+  }
+
+  .c-systems-layout .c-service:hover,
+  .c-systems-layout .c-service.is-active {
+    transform: none;
+  }
+}
+
+/* SOFTEN PASS — calmer Systems hover + less aggressive atmosphere */
+.c-atmosphere-sphere{opacity:.24!important;filter:saturate(.78) contrast(.92) blur(.2px)!important;mix-blend-mode:screen}.c-hero-illusion{opacity:.22!important}.c-systems-layout{gap:clamp(44px,7vw,112px)}.c-systems-layout::before{opacity:.46!important;filter:blur(36px)!important}.c-system-detail{opacity:.88!important;min-height:280px!important;animation-duration:640ms!important}.c-system-detail::before{opacity:.42!important;box-shadow:0 0 14px rgba(125,190,255,.09)!important}.c-system-detail::after{opacity:.38!important;filter:blur(46px)!important}.c-system-detail-label{color:rgba(190,205,235,.42)!important}.c-system-detail-title{color:rgba(246,248,255,.88)!important;text-shadow:none!important}.c-system-detail-copy{color:rgba(222,230,250,.58)!important}.c-systems-layout .c-service{padding:clamp(18px,2.5vw,28px) 0!important;border-bottom-color:rgba(230,238,255,.052)!important;transition:opacity 360ms ease,transform 360ms ease,border-color 360ms ease!important}.c-systems-layout .c-service::before{inset:10px -10px!important;background:linear-gradient(90deg,transparent,rgba(160,195,255,.028),rgba(80,220,198,.014),transparent)!important;opacity:0!important;transition:opacity 380ms ease,transform 380ms ease!important}.c-systems-layout .c-service:hover,.c-systems-layout .c-service.is-active{transform:translateX(-2px)!important}.c-systems-layout .c-service:hover::before,.c-systems-layout .c-service.is-active::before{opacity:.34!important}.c-systems-layout .c-service-title{color:rgba(238,243,255,.52)!important;text-shadow:none!important;transition:color 360ms ease,opacity 360ms ease!important}.c-systems-layout .c-service:hover .c-service-title,.c-systems-layout .c-service.is-active .c-service-title{color:rgba(255,255,255,.78)!important;text-shadow:none!important}.c-systems-layout .c-service-num{color:rgba(210,222,250,.28)!important;text-shadow:none!important;transition:color 360ms ease!important}.c-systems-layout .c-service:hover .c-service-num,.c-systems-layout .c-service.is-active .c-service-num{color:rgba(210,242,255,.48)!important;text-shadow:none!important}.c-service-line{width:26px!important;opacity:.12!important;background:linear-gradient(90deg,transparent,rgba(220,232,255,.22))!important;transition:opacity 360ms ease,transform 360ms ease,background 360ms ease!important}.c-systems-layout .c-service:hover .c-service-line,.c-systems-layout .c-service.is-active .c-service-line{opacity:.42!important;transform:scaleX(.78)!important;background:linear-gradient(90deg,transparent,rgba(210,232,255,.46))!important}@keyframes systemDetailFade{from{opacity:0;transform:translate3d(-8px,5px,0);filter:blur(5px)}to{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}}@media(max-width:900px){.c-atmosphere-sphere{opacity:.14!important}.c-hero-illusion{opacity:.12!important}.c-system-detail{opacity:.84!important}.c-systems-layout .c-service:hover,.c-systems-layout .c-service.is-active{transform:none!important}}

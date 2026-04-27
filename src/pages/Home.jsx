@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { services } from "../data/services";
 import { useAuth } from "../auth/AuthProvider";
 import AuthModal from "../components/AuthModal";
+import AtmosphereSphere from "../components/AtmosphereSphere";
 
 export default function Home() {
   const [activeService, setActiveService] = useState(0);
@@ -21,6 +22,8 @@ export default function Home() {
 
   return (
     <>
+      <AtmosphereSphere />
+
       <section id="home" className="c-section c-hero c-align-left">
         <div className="c-hero-inner">
           <p className="c-kicker">AI DIRECTION / WORLDBUILDING / VISUAL SYSTEMS</p>
@@ -56,25 +59,30 @@ export default function Home() {
           <h2>What we build</h2>
         </div>
 
-        <div className="c-service-list">
-          {services.map((item, index) => (
-            <button
-              key={item.title}
-              type="button"
-              className={`c-service ${activeService === index ? "is-active" : ""}`}
-              onClick={() => setActiveService(index)}
-            >
-              <span className="c-service-num">{String(index + 1).padStart(2, "0")}</span>
-              <span className="c-service-title">{item.title}</span>
-              <span className="c-service-icon">{activeService === index ? "−" : "+"}</span>
-            </button>
-          ))}
-        </div>
+        <div className="c-systems-layout">
+          <div className="c-system-detail" key={services[activeService].title}>
+            <p className="c-system-detail-label">ACTIVE SYSTEM</p>
+            <h3 className="c-system-detail-title">{services[activeService].title}</h3>
+            <p className="c-system-detail-copy">{services[activeService].text}</p>
+          </div>
 
-        <div className="c-panel">
-          <p className="c-panel-label">SERVICE WINDOW</p>
-          <h3>{services[activeService].title}</h3>
-          <p>{services[activeService].text}</p>
+          <div className="c-service-list" aria-label="Systems list">
+            {services.map((item, index) => (
+              <button
+                key={item.title}
+                type="button"
+                className={`c-service ${activeService === index ? "is-active" : ""}`}
+                onMouseEnter={() => setActiveService(index)}
+                onFocus={() => setActiveService(index)}
+                onClick={() => setActiveService(index)}
+                aria-pressed={activeService === index}
+              >
+                <span className="c-service-num">{String(index + 1).padStart(2, "0")}</span>
+                <span className="c-service-title">{item.title}</span>
+                <span className="c-service-line" aria-hidden="true" />
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
