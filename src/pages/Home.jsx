@@ -98,9 +98,9 @@ export default function Home() {
           Available for select commissions, collaborations, and long-form creative systems.
         </p>
 
-        <a className="c-email" href="mailto:cchanter1@gmail.com">
-          cchanter1@gmail.com
-        </a>
+        <a className="c-email" href="mailto:hello@chanterr.com">
+  hello@chanterr.com
+		</a>
 
         <div className="c-socials">
           <a href="https://www.instagram.com/___chanter/" target="_blank" rel="noreferrer">
