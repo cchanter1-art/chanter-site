@@ -1,15 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import {
-  onAuthStateChanged,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
-import {
-  doc,
-  getDoc,
-  serverTimestamp,
-  setDoc,
-} from "firebase/firestore";
+import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 
 import { auth, db, firebaseReady, googleProvider } from "../lib/firebase";
 
@@ -19,24 +10,19 @@ async function saveLoggedInUser(user) {
   if (!db || !user) return;
 
   const userRef = doc(db, "users", user.uid);
-  const snap = await getDoc(userRef);
 
-  const userData = {
-    uid: user.uid,
-    email: user.email || "",
-    displayName: user.displayName || "",
-    photoURL: user.photoURL || "",
-    lastLogin: serverTimestamp(),
-  };
-
-  if (!snap.exists()) {
-    await setDoc(userRef, {
-      ...userData,
-      createdAt: serverTimestamp(),
-    });
-  } else {
-    await setDoc(userRef, userData, { merge: true });
-  }
+  await setDoc(
+    userRef,
+    {
+      uid: user.uid,
+      email: user.email || "",
+      displayName: user.displayName || "",
+      photoURL: user.photoURL || "",
+      createdAt: user.metadata?.creationTime || serverTimestamp(),
+      lastLogin: serverTimestamp(),
+    },
+    { merge: true }
+  );
 }
 
 export function AuthProvider({ children }) {
@@ -49,10 +35,12 @@ export function AuthProvider({ children }) {
       return undefined;
     }
 
-    return onAuthStateChanged(auth, (nextUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (nextUser) => {
       setUser(nextUser);
       setLoading(false);
     });
+
+    return () => unsubscribe();
   }, []);
 
   const value = useMemo(
@@ -60,16 +48,19 @@ export function AuthProvider({ children }) {
       user,
       loading,
       firebaseReady,
+
       signInWithGoogle: async () => {
         if (!auth || !googleProvider) {
           throw new Error("Firebase env variables are missing.");
         }
 
         const result = await signInWithPopup(auth, googleProvider);
+
         await saveLoggedInUser(result.user);
 
         return result;
       },
+
       signOutUser: async () => {
         if (!auth) return;
         await signOut(auth);
