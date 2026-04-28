@@ -4,9 +4,40 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { auth, firebaseReady, googleProvider } from "../lib/firebase";
+import {
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
+
+import { auth, db, firebaseReady, googleProvider } from "../lib/firebase";
 
 const AuthContext = createContext(null);
+
+async function saveLoggedInUser(user) {
+  if (!db || !user) return;
+
+  const userRef = doc(db, "users", user.uid);
+  const snap = await getDoc(userRef);
+
+  const userData = {
+    uid: user.uid,
+    email: user.email || "",
+    displayName: user.displayName || "",
+    photoURL: user.photoURL || "",
+    lastLogin: serverTimestamp(),
+  };
+
+  if (!snap.exists()) {
+    await setDoc(userRef, {
+      ...userData,
+      createdAt: serverTimestamp(),
+    });
+  } else {
+    await setDoc(userRef, userData, { merge: true });
+  }
+}
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -33,7 +64,11 @@ export function AuthProvider({ children }) {
         if (!auth || !googleProvider) {
           throw new Error("Firebase env variables are missing.");
         }
-        await signInWithPopup(auth, googleProvider);
+
+        const result = await signInWithPopup(auth, googleProvider);
+        await saveLoggedInUser(result.user);
+
+        return result;
       },
       signOutUser: async () => {
         if (!auth) return;
